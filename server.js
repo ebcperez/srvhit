@@ -12,7 +12,7 @@ const LocalStrategy = require('passport-local').Strategy
 //database
 const mongo = require('mongodb')
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/loginapp')
+mongoose.connect('mongodb://admin:adminpass@ds145659.mlab.com:45659/heroku_9xzsm75k')
 
 const routes = require('./routes/index')
 const users = require('./routes/users')
