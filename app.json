@@ -1,6 +1,0 @@
-{
-    "name": "SRVHIT",
-    "description": "Development version of SRVHIT",
-    "repository": "https://github.com/ebcperez/srvhit.git",
-    "keywords": ["node", "express", "mongodb"]
-}

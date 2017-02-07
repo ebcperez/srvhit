@@ -4,7 +4,8 @@
   "description": "Log in system with node.js and passport.js",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [
     "node",
@@ -16,18 +17,18 @@
   },
   "author": "Earl Perez",
   "license": "ISC",
-  "devDependencies": {
-    "bcryptjs": "^2.4.0", //password hashing
+  "dependencies": {
+    "bcryptjs": "^2.4.0",
     "body-parser": "^1.16.0",
-    "connect-flash": "^0.1.1", //for flash message
+    "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.1",
-    "express-handlebars": "^3.0.0", //view engine
-    "express-messages": "^1.0.1", //flash messaging
-    "express-session": "^1.15.0", //flash messaging
-    "express-validator": "^3.1.2", //validate forms
+    "express-handlebars": "^3.0.0",
+    "express-messages": "^1.0.1",
+    "express-session": "^1.15.0",
+    "express-validator": "^3.1.2",
     "mongodb": "^2.2.22",
-    "mongoose": "^4.8.1", //mongodb orm
+    "mongoose": "^4.8.1",
     "passport": "^0.3.2",
     "passport-http": "^0.3.0",
     "passport-local": "^1.0.0"
