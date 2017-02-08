@@ -40,12 +40,16 @@ const UserSchema = mongoose.Schema({
     },
     education: {
         type: String
+    },
+    admin: {
+        type: Boolean
     }
 })
 
 var User = module.exports = mongoose.model('User', UserSchema)
 
 module.exports.createUser = (newUser, callback) => {
+    //hashes password in database
     bcrypt.genSalt(10, function(err, salt) {
         bcrypt.hash(newUser.password, salt, function(err, hash) {
             newUser.password = hash

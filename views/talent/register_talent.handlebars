@@ -7,9 +7,9 @@
         </div>
     {{/each}}
 {{/if}}
-<form method="post" action="/users/register_business">
+<form method="post" action="/users/register_talent">
     <div class="form-group">
-        <label>Company Name</label>
+        <label>Name</label>
         <input type="text" class="form-control" placeholder="Name" name="name">
     </div>
     <div class="form-group">
@@ -21,32 +21,12 @@
         <input type="text" class="form-control" placeholder="Email" name="email">
     </div>
     <div class="form-group">
-        <label>Website</label>
+        <label>Website (Optional)</label>
         <input type="text" class="form-control" placeholder="Optional" name="website1">
     </div>
-    <!-- address-line input-->
     <div class="form-group">
-        <label class="control-label">Address</label>
-        <div class="controls">
-            <input id="address" name="address" type="text" placeholder="address line" class="form-control">
-            <p class="help-block">Street address, P.O. box, company name, Apartment, suite , unit, building, floor, etc.</p>
-        </div>
-    </div>
-    <!-- city input-->
-    <div class="form-group">
-        <label class="control-label">City / Town</label>
-        <div class="controls">
-            <input id="city" name="city" type="text" placeholder="city" class="form-control">
-            <p class="help-block"></p>
-        </div>
-    </div>
-    <!-- region input-->
-    <div class="form-group">
-        <label class="control-label">State / Province / Region</label>
-        <div class="controls">
-            <input id="region" name="region" type="text" placeholder="state / province / region" class="form-control">
-            <p class="help-block"></p>
-        </div>
+        <label>Website (Optional)</label>
+        <input type="text" class="form-control" placeholder="Optional" name="website2">
     </div>
     <!-- postal-code input-->
     <div class="form-group">
