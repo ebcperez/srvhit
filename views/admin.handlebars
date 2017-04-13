@@ -22,9 +22,7 @@
     <h4>All Accounts</h4>
     <div class="list-group"> <!--Data being dropped -->
         {{#each docs}}
-        <a href="#" class="list-group-item">{{this}}</a>
-        <a href="#" class="list-group-item">{{contact_info.email}}</a>
-        <a href="#" class="list-group-item">{{name}} {{address}}</a>
+        <a href="#" class="list-group-item">{{name}} {{address}} {{contact_info.email}}</a>
         {{/each}}
     </div>
   </div>
