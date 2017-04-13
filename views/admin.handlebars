@@ -3,30 +3,34 @@
     <input type="text" class="form-control" placeholder="Search database..">
     <span class="input-group-btn">
       <button class="btn btn-default" type="button">
-        <span class="glyphicon glyphicon-search"></span>
-      </button>
+        <s  pan class="glyphicon glyphicon-search"></span>
+        </button>
     </span>
-  </div>
+    <div class="results"></div>
+ </div>
   <ul class="nav nav-pills nav-stacked">
       <li class="active"><a data-toggle="pill" href="#profile">Profile</a></li>
       <li><a data-toggle="pill" href="#preferences">Preferences</a></li>
       <li><a data-toggle="pill" href="#menu2">Student Accounts</a></li>
       <li><a data-toggle="pill" href="#menu3">Business Accounts</a></li>
-    </ul>
+  </ul>
 </div>
-    
+
 <div class="tab-content col-sm-9">
   <div id="profile" class="tab-pane fade in active">
     <h3>Admin Profile</h3>
     <h4>All Accounts</h4>
-    <div class="list-group">
+    <div class="list-group"> <!--Data being dropped -->
         {{#each docs}}
         <a href="#" class="list-group-item">{{this}}</a>
+          <a href="#" class="list-group-item">{{contact_info.email}}</a>
+            <a href="#" class="list-group-item">{{contact_info.phone}}</a>
+          <a href="#" class="list-group-item">{{name}}</a>
+            <a href="#" class="list-group-item">{{address}}</a>
         {{/each}}
     </div>
   </div>
   <div id="preferences" class="tab-pane fade">
-    <h3>Preferences</h3>
   </div>
   <div id="menu2" class="tab-pane fade">
     <h3>Student Accounts</h3>
