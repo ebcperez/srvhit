@@ -15,8 +15,9 @@ const mongoose = require('mongoose')
 mongoose.connect('mongodb://admin:adminpass@ds145659.mlab.com:45659/heroku_9xzsm75k')
 //mongoose.connect('mongodb://127.0.0.1:27017/loginapp')
 
-const routes = require('./routes/index')
+const index = require('./routes/index')
 const users = require('./routes/users')
+const students = require('./routes/students')
 
 const app = express()
 
@@ -68,8 +69,9 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use('/', routes)
+app.use('/', index)
 app.use('/users', users)
+app.use('/students', students)
 
 app.listen(process.env.PORT || 5000, () => {
     console.log('Server started.')

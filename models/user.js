@@ -58,15 +58,18 @@ module.exports.createUser = (newUser, callback) => {
     });
 }
 
+//find by username in database
 module.exports.getUserByUsername = (username, callback) => {
     let query = {username: username}
     User.findOne(query, callback)
 }
 
+//find by user id
 module.exports.getUserById = (id, callback) => {
     User.findById(id, callback)
 }
 
+//compares password in database for validation
 module.exports.comparePassword = (candidatePassword, hash, callback) => {
     bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
         if (err) throw err

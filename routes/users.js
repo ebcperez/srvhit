@@ -40,8 +40,8 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
     if (req.user.account_type === 'business') {
         res.render('business/dashboard_business', {user: req.user})
     } 
-    if (req.user.account_type === 'talent') {
-        res.render('talent/dashboard_talent', {user: req.user})
+    if (req.user.account_type === 'student') {
+        res.render('talent/dashboard_student', {user: req.user})
     }
     if (req.user.admin) {
         //render admin page with database info
@@ -53,6 +53,7 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
         })
     }
 })
+//passed into function above as parameter
 //prevents user from accessing dashboard if not logged in
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
@@ -137,6 +138,7 @@ router.post('/register_talent', (req, res) => {
             errors: errors
         })
     } else {
+        //else create new user
         let newUser = new User({
             name: name,
             contact_info: {email: email, website1: website1, website2: website2},
@@ -158,6 +160,7 @@ passport.use(new LocalStrategy(
     function(username, password, done) {
         User.getUserByUsername(username, function(err, user) {
             if (err) throw err
+            //if username not found in database
             if (!user) {
                 return done(null, false, {message: 'Unknown User'})
             }
