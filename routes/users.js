@@ -1,3 +1,4 @@
+//handles log in authentication and page accesss
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
@@ -9,28 +10,8 @@ const Handlebars = require('express-handlebars')
 const app = express()
 
 const User = require('../models/user')
+const Student = require('../models/student')
 
-//.edu email validator
-app.use(expressValidator({
- customValidators: {
-    eduEmail: function(email) {
-        return email.substring(email.length-4, email.length+1) === '.edu'
-    }
- }
-}))
-
-//get register view
-router.get('/register', (req, res) => {
-    res.render('register')
-})
-//get register view
-router.get('/register_business', (req, res) => {
-    res.render('business/register_business')
-})
-//get register view
-router.get('/register_talent', (req, res) => {
-    res.render('talent/register_talent')
-})
 //login
 router.get('/login', (req, res) => {
     res.render('login')
@@ -44,11 +25,11 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
         res.render('talent/dashboard_student', {user: req.user})
     }
     if (req.user.admin) {
-        //render admin page with database info
+        //render admin page with database documents
         User.find({}, 'name username address contact_info account_type', (err, docs) => {
             if (err) throw err
             else {
-                res.render('admin',{docs})
+                res.render('admin', {docs})
             }
         })
     }
@@ -59,142 +40,78 @@ function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next()
     } else {
-        res.redirect('/users/login')
+        res.redirect('/user/login')
     }
 }
-//post business registration form
-router.post('/register_business', (req, res) => {
-    let user_address = `${req.body.address}, ${req.body.city}, ${req.body.region} ${req.body.postalcode}`
-    let name = req.body.name
-    let email = req.body.email
-    let website1 = req.body.website1
-    let address = user_address
-    let username = req.body.username
-    let password = req.body.password
-    let password2 = req.body.password2
-
-    //validation
-    req.checkBody('name', 'Name is required.').notEmpty()
-    req.checkBody('email', 'Email is required.').notEmpty()
-    req.checkBody('email', 'Email is not valid.').isEmail()
-    req.checkBody('address', 'Address is required.').notEmpty()
-    req.checkBody('city', 'City is required.').notEmpty()
-    req.checkBody('region', 'Region is required.').notEmpty()
-    req.checkBody('postalcode', 'Postal Code is required.').notEmpty()
-    req.checkBody('username', 'Name is required.').notEmpty()
-    req.checkBody('password', 'Password is required.').notEmpty()
-    req.checkBody('password2', 'Passwords do not match.').equals(req.body.password)
-
-    //rerender page with errors
-    let errors = req.validationErrors()
-    if (errors) {
-        res.render('register_business', {
-            errors: errors
-        })
-    } else {
-        let newUser = new User({
-            name: name,
-            contact_info: {email: email, website1: website1,},
-            address: address,
-            username: username,
-            password: password,
-            account_type: 'business'
-        })
-        User.createUser(newUser, (err, user) => {
-            if (err) throw err
-            console.log(user)
-        })
-        req.flash('success_msg', 'You have successfully registered.')
-        res.redirect('/users/login')
-    }
-})
-
-//post student registration form
-router.post('/register_talent', (req, res) => {
-    let name = req.body.name
-    let email = req.body.email
-    let website1 = req.body.website1
-    //sets website2 from registration if entered, empty string if not
-    let website2 = req.body.website2 ? req.body.website2 : ''
-    let address = req.body.postalcode
-    let username = req.body.username
-    let password = req.body.password
-    let password2 = req.body.password2
-
-    //validation
-    req.checkBody('name', 'Name is required.').notEmpty()
-    req.checkBody('email', 'Email is required.').notEmpty()
-    req.checkBody('email', 'Email is not valid.').isEmail()
-    req.checkBody('email', 'Email must be .edu.').eduEmail()
-    req.checkBody('postalcode', 'Postal Code is required.').notEmpty()
-    req.checkBody('username', 'Name is required.').notEmpty()
-    req.checkBody('password', 'Password is required.').notEmpty()
-    req.checkBody('password2', 'Passwords do not match.').equals(req.body.password)
-
-    //rerender page with errors
-    let errors = req.validationErrors()
-    if (errors) {
-        res.render('register_talent', {
-            errors: errors
-        })
-    } else {
-        //else create new user
-        let newUser = new User({
-            name: name,
-            contact_info: {email: email, website1: website1, website2: website2},
-            address: address,
-            username: username,
-            password: password,
-            account_type: 'talent'
-        })
-        User.createUser(newUser, (err, user) => {
-            if (err) throw err
-            console.log(user)
-        })
-        req.flash('success_msg', 'You have successfully registered.')
-        res.redirect('/users/login')
-    }
-})
 //log in authentication
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-        User.getUserByUsername(username, function(err, user) {
+passport.use(new LocalStrategy(function(username, password, done) {
+    //check account type
+    if(Student.findOne({'username': username})) {
+        Student.getStudentByUsername(username, function(err, student) {
             if (err) throw err
             //if username not found in database
-            if (!user) {
+            if (!student) {
                 return done(null, false, {message: 'Unknown User'})
             }
-            User.comparePassword(password, user.password, function(err, isMatch) {
+            Student.comparePassword(password, student.password, function(err, isMatch) {
                 if (err) throw err
                 if (isMatch) {
-                    return done(null, user)
+                    return done(null, student)
                 } else {
                     return done(null, false, {message: 'Invalid password'})
                 }
             })
         })
-    }
-))
+    } /*else if(Business.findOne({'username': username})) {
+        Business.getBusinessByUsername(username, function(err, business) {
+            if (err) throw err
+            //if username not found in database
+            if (!business) {
+                return done(null, false, {message: 'Unknown User'})
+            }
+            Business.comparePassword(password, business.password, function(err, isMatch) {
+                if (err) throw err
+                if (isMatch) {
+                    return done(null, business)
+                } else {
+                    return done(null, false, {message: 'Invalid password'})
+                }
+            })
+        })
+    }*/
+    
+}))
 
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-    User.getUserById(id, function(err, user) {
-        done(err, user);
-    });
+    //check account type
+    if(Student.findById(id)) {
+        Student.getStudentById(id, function(err, user) {
+            done(err, user);
+        });
+    } /*else if(Business.findById(id)) {
+        console.log('Found business!')
+        Business.getBusinessById(id, function(err, user) {
+            done(err, user);
+        });
+    }*/
+    
 });
+
 //redirects user to dashboard if logged in succesfully, log in page is rerendered otherwise
-router.post('/login', passport.authenticate('local', {successRedirect: '/users/dashboard', failureRedirect: '/users/login', failureFlash: true}), 
+router.post('/login', passport.authenticate('local', {successRedirect: '/user/dashboard', failureRedirect: '/user/login', failureFlash: true}), 
     function(req, res) {
         res.redirect('/')
     }
 )
+
 router.get('/logout', function(req, res) {
     req.logout()
     req.flash('success_msg', 'You are logged out.')
-    res.redirect('/users/login')
+    res.redirect('/user/login')
 })
 
 module.exports = router

@@ -1,15 +1,12 @@
+//handles student registration
 const express = require('express')
 const router = express.Router()
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
 const expressValidator = require('express-validator')
 const mongoose = require('mongoose')
-const Handlebars = require('express-handlebars')
 
 const app = express()
 
 const Student = require('../models/student')
-const User = require('../models/user')
 
 //.edu email validator
 app.use(expressValidator({
@@ -24,21 +21,6 @@ app.use(expressValidator({
 router.get('/register_student', (req, res) => {
     res.render('talent/register_student')
 })
-
-//renders dashboard based on account type of user
-router.get('/dashboard', ensureAuthenticated, (req, res) => {
-    res.render('talent/dashboard_student', {user: req.user})
-})
-//passed into function above as parameter
-//prevents user from accessing dashboard if not logged in
-function ensureAuthenticated(req, res, next) {
-    console.log(req)
-    if (req.isAuthenticated()) {
-        return next()
-    } else {
-        res.redirect('/students/login')
-    }
-}
 
 //post student registration form
 router.post('/register_student', (req, res) => {
@@ -67,7 +49,7 @@ router.post('/register_student', (req, res) => {
     //rerender page with errors
     let errors = req.validationErrors()
     if (errors) {
-        res.render('register_student', {
+        res.render('talent/register_student', {
             errors: errors
         })
     } else {
@@ -88,54 +70,13 @@ router.post('/register_student', (req, res) => {
             password: password,
             account_type: 'student'
         })
-        Student.createUser(newStudent, (err, student) => {
+        Student.createStudent(newStudent, (err, student) => {
             if (err) throw err
             console.log(student)
         })
         req.flash('success_msg', 'You have successfully registered.')
-        res.redirect('/students/login')
+        res.redirect('/user/login')
     }
-})
-//log in authentication
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-        Student.getUserByUsername(username, function(err, student) {
-            if (err) throw err
-            //if username not found in database
-            if (!student) {
-                return done(null, false, {message: 'Unknown User'})
-            }
-            Student.comparePassword(password, student.password, function(err, isMatch) {
-                if (err) throw err
-                if (isMatch) {
-                    return done(null, student)
-                } else {
-                    return done(null, false, {message: 'Invalid password'})
-                }
-            })
-        })
-    }
-))
-
-passport.serializeUser(function(student, done) {
-    done(null, student.id);
-});
-
-passport.deserializeUser(function(id, done) {
-    Student.getUserById(id, function(err, student) {
-        done(err, student);
-    });
-});
-//redirects user to dashboard if logged in succesfully, log in page is rerendered otherwise
-router.post('/login', passport.authenticate('local', {successRedirect: '/students/dashboard', failureRedirect: '/students/login', failureFlash: true}), 
-    function(req, res) {
-        res.redirect('/')
-    }
-)
-router.get('/logout', function(req, res) {
-    req.logout()
-    req.flash('success_msg', 'You are logged out.')
-    res.redirect('/students/login')
 })
 
 module.exports = router

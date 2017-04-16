@@ -88,7 +88,7 @@ const StudentSchema = new Schema({
 
 var Student = module.exports = mongoose.model('Student', StudentSchema, 'users')
 
-module.exports.createUser = (newStudent, callback) => {
+module.exports.createStudent = (newStudent, callback) => {
     //hashes password in database
     bcrypt.genSalt(10, function(err, salt) {
         bcrypt.hash(newStudent.password, salt, function(err, hash) {
@@ -99,13 +99,13 @@ module.exports.createUser = (newStudent, callback) => {
 }
 
 //find by username in database
-module.exports.getUserByUsername = (username, callback) => {
+module.exports.getStudentByUsername = (username, callback) => {
     let query = {username: username}
     Student.findOne(query, callback)
 }
 
 //find by user id
-module.exports.getUserById = (id, callback) => {
+module.exports.getStudentById = (id, callback) => {
     Student.findById(id, callback)
 }
 

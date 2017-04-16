@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const exphbs = require('express-handlebars')
 const expressValidator = require('express-validator')
-//flash messagings
+//flash messaging
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('passport')
@@ -16,8 +16,9 @@ mongoose.connect('mongodb://admin:adminpass@ds145659.mlab.com:45659/heroku_9xzsm
 //mongoose.connect('mongodb://127.0.0.1:27017/loginapp')
 
 const index = require('./routes/index')
-const users = require('./routes/users')
-const students = require('./routes/students')
+const user = require('./routes/users')
+const student = require('./routes/students')
+const register = require('./routes/register')
 
 const app = express()
 
@@ -70,8 +71,9 @@ app.use((req, res, next) => {
 })
 
 app.use('/', index)
-app.use('/users', users)
-app.use('/students', students)
+app.use('/user', user)
+app.use('/student', student)
+app.use('/register', register)
 
 app.listen(process.env.PORT || 5000, () => {
     console.log('Server started.')
