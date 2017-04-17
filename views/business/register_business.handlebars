@@ -7,22 +7,28 @@
         </div>
     {{/each}}
 {{/if}}
-<form method="post" action="/users/register_business">
+<form method="post" action="/business/register_business">
     <div class="form-group">
         <label>Company Name</label>
-        <input type="text" class="form-control" placeholder="Name" name="name">
+        <input type="text" class="form-control" placeholder="name" name="name">
     </div>
+    <!-- contact info -->
     <div class="form-group">
-        <label>Username</label>
-        <input type="text" class="form-control" placeholder="Username" name="username">
+        <label>Phone</label>
+        <input type="text" class="form-control" placeholder="phone" name="phone">
     </div>
     <div class="form-group">
         <label>Email</label>
-        <input type="text" class="form-control" placeholder="Email" name="email">
+        <input type="text" class="form-control" placeholder="email" name="email">
     </div>
     <div class="form-group">
-        <label>Website</label>
+        <label>Website (Optional)</label>
         <input type="text" class="form-control" placeholder="Website Link" name="website1">
+    </div>
+    <div class="form-group">
+        <label>Preferred Method</label><br>
+        <input type="radio" name="preference" value="Email" checked> Email<br>
+        <input type="radio" name="preference" value="Phone"> Phone<br>
     </div>
     <!-- address-line input-->
     <div class="form-group">
@@ -40,19 +46,27 @@
             <p class="help-block"></p>
         </div>
     </div>
-    <!-- region input-->
-    <div class="form-group">
-        <label class="control-label">State / Province / Region</label>
-        <div class="controls">
-            <input id="region" name="region" type="text" placeholder="state / province / region" class="form-control">
-            <p class="help-block"></p>
-        </div>
-    </div>
     <!-- postal-code input-->
     <div class="form-group">
         <label class="control-label">Zip / Postal Code</label>
         <div class="controls">
             <input id="postal-code" name="postalcode" type="text" placeholder="zip or postal code" class="form-control">
+            <p class="help-block"></p>
+        </div>
+    </div>
+    <!-- industry input-->
+    <div class="form-group">
+        <label class="control-label">Industry</label>
+        <div class="controls">
+            <input id="industry" name="industry" type="text" placeholder="industry" class="form-control">
+            <p class="help-block"></p>
+        </div>
+    </div>
+    <!-- company size-->
+    <div class="form-group">
+        <label class="control-label">Company Size</label>
+        <div class="controls">
+            <input id="size" name="size" type="number" placeholder="number of employees" class="form-control" min="1">
             <p class="help-block"></p>
         </div>
     </div>

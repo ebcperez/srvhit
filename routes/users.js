@@ -11,6 +11,7 @@ const app = express()
 
 const User = require('../models/user')
 const Student = require('../models/student')
+const Business = require('../models/business')
 
 //login
 router.get('/login', (req, res) => {
@@ -46,13 +47,27 @@ function ensureAuthenticated(req, res, next) {
 //log in authentication
 passport.use(new LocalStrategy(function(username, password, done) {
     //check account type
-    if(Student.findOne({'username': username})) {
-        Student.getStudentByUsername(username, function(err, student) {
-            if (err) throw err
-            //if username not found in database
-            if (!student) {
-                return done(null, false, {message: 'Unknown User'})
-            }
+    Student.getStudentByUsername(username, function(err, student) {
+        if (err) throw err
+        //if username not found in student database look in business database
+        if (!student) {
+            Business.getBusinessByName(username, function(err, business) {
+                if (err) throw err
+                //if username not found in database
+                if (!business) {
+                    return done(null, false, {message: 'Unknown User'})
+                }
+                Business.comparePassword(password, business.password, function(err, isMatch) {
+                    if (err) throw err
+                    if (isMatch) {
+                        return done(null, business)
+                    } else {
+                        return done(null, false, {message: 'Invalid password'})
+                    }
+                })
+            })
+        } else {
+            //compare passwords
             Student.comparePassword(password, student.password, function(err, isMatch) {
                 if (err) throw err
                 if (isMatch) {
@@ -61,25 +76,8 @@ passport.use(new LocalStrategy(function(username, password, done) {
                     return done(null, false, {message: 'Invalid password'})
                 }
             })
-        })
-    } /*else if(Business.findOne({'username': username})) {
-        Business.getBusinessByUsername(username, function(err, business) {
-            if (err) throw err
-            //if username not found in database
-            if (!business) {
-                return done(null, false, {message: 'Unknown User'})
-            }
-            Business.comparePassword(password, business.password, function(err, isMatch) {
-                if (err) throw err
-                if (isMatch) {
-                    return done(null, business)
-                } else {
-                    return done(null, false, {message: 'Invalid password'})
-                }
-            })
-        })
-    }*/
-    
+        }
+    })
 }))
 
 passport.serializeUser(function(user, done) {
@@ -92,12 +90,12 @@ passport.deserializeUser(function(id, done) {
         Student.getStudentById(id, function(err, user) {
             done(err, user);
         });
-    } /*else if(Business.findById(id)) {
+    } else if(Business.findById(id)) {
         console.log('Found business!')
         Business.getBusinessById(id, function(err, user) {
             done(err, user);
         });
-    }*/
+    }
     
 });
 
