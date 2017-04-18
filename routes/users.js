@@ -12,6 +12,7 @@ const app = express()
 const User = require('../models/user')
 const Student = require('../models/student')
 const Business = require('../models/business')
+const Admin = require('../models/admin')
 
 //login
 router.get('/login', (req, res) => {
@@ -53,10 +54,24 @@ passport.use(new LocalStrategy(function(username, password, done) {
         if (!student) {
             Business.getBusinessByName(username, function(err, business) {
                 if (err) throw err
-                //if username not found in database
+                //if username not found in database check the admin database
                 if (!business) {
-                    return done(null, false, {message: 'Unknown User'})
-                }
+                    Admin.getAdminByName(username, function(err, admin) {
+                        if (err) throw err
+                        //if username not found in database return error message
+                        if (!admin) {
+                            return done(null, false, {message: 'Unknown User'})
+                        }
+                        Admin.comparePassword(password, admin.password, function(err, isMatch) {
+                            if (err) throw err
+                            if (isMatch) {
+                                return done(null, admin)
+                            } else {
+                                return done(null, false, {message: 'Invalid password'})
+                            }
+                        })
+                    })
+                }    
                 Business.comparePassword(password, business.password, function(err, isMatch) {
                     if (err) throw err
                     if (isMatch) {
@@ -87,12 +102,18 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
     //check account type
     if(Student.findById(id)) {
+        console.log('Found Student!')
         Student.getStudentById(id, function(err, user) {
             done(err, user);
         });
     } else if(Business.findById(id)) {
         console.log('Found business!')
         Business.getBusinessById(id, function(err, user) {
+            done(err, user);
+        });
+    } else if(Admin.findById(id)) {
+        console.log('Found Admin!')
+        Admin.getAdminById(id, function(err, user) {
             done(err, user);
         });
     }
