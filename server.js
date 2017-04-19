@@ -21,6 +21,7 @@ const user = require('./routes/users')
 const student = require('./routes/students')
 const register = require('./routes/register')
 const business = require('./routes/businesses')
+const admin = require('./routes/admins')
 
 const app = express()
 
@@ -74,6 +75,7 @@ app.use((req, res, next) => {
 
 app.use('/', index)
 app.use('/user', user)
+app.use('./admin', admin)
 app.use('/student', student)
 app.use('/register', register)
 app.use('/business', business)
