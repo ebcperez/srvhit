@@ -11,7 +11,7 @@ const AdminSchema = new Schema({
         unique: true,
     },
     account_id: {
-        type: Schema.types.ObjectId
+        type: Schema.Types.ObjectId
     },
     password: {
         type: String
