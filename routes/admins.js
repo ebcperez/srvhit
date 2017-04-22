@@ -6,6 +6,11 @@ const mongoose = require('mongoose')
 
 const Admin = require('../models/admin')
 
+//admin dashboard
+router.get('/', (req, res) => {
+    res.send('admin dashboard')
+})
+
 //get register view
 router.get('/register_admin', (req, res) => {
     res.render('admin/register_admin')
@@ -16,7 +21,6 @@ router.post('/register_admin', (req, res) => {
     let name = req.body.name
     let phone = req.body.phone
     let email = req.body.email
-    let preference = req.body.preference
     let password = req.body.password
     let password2 = req.body.password2
 
@@ -31,16 +35,16 @@ router.post('/register_admin', (req, res) => {
     //rerender page with errors
     let errors = req.validationErrors()
     if (errors) {
-        res.render('admin/register_adin', {
+        res.render('admin/register_admin', {
             errors: errors
         })
     } else {
         //else create new admin
         let newAdmin = new Admin({
+            username: name,
             contact_info: {
                 email: email, 
-                phone: phone, 
-                preference: preference
+                phone: phone,
             },
             password: password,
             account_type: 'admin'
@@ -49,7 +53,7 @@ router.post('/register_admin', (req, res) => {
             if (err) throw err
             console.log(admin)
         })
-        req.flash('success_msg', 'You have successfully registered.')
+        req.flash('success_msg', 'Admin successfully registered.')
         res.redirect('/user/login')
     }
 })
