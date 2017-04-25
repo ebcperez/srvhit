@@ -6,6 +6,11 @@ const mongoose = require('mongoose')
 
 const Business = require('../models/business')
 
+//dashboard
+router.get('/dashboard', (req, res) => {
+    res.render('business/dashboard_business', {user: req.user})
+})
+
 //get register view
 router.get('/register_business', (req, res) => {
     res.render('business/register_business')

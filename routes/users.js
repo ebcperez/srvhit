@@ -21,10 +21,10 @@ router.get('/login', (req, res) => {
 //renders dashboard based on account type of user
 router.get('/dashboard', ensureAuthenticated, (req, res) => {
     if (req.user.account_type === 'business') {
-        res.render('business/dashboard_business', {user: req.user})
+        res.redirect('/business/dashboard')
     } 
     if (req.user.account_type === 'student') {
-        res.render('talent/dashboard_student', {user: req.user})
+        res.redirect('/student/dashboard')
     }
     if (req.user.admin) {
         //render admin page with database documents
@@ -102,17 +102,17 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
     //check account type
     if(Student.findById(id)) {
-        console.log('Found Student!')
+        //console.log('Found Student!')
         Student.getStudentById(id, function(err, user) {
             done(err, user);
         });
     } else if(Business.findById(id)) {
-        console.log('Found business!')
+        //console.log('Found business!')
         Business.getBusinessById(id, function(err, user) {
             done(err, user);
         });
     } else if(Admin.findById(id)) {
-        console.log('Found Admin!')
+        //console.log('Found Admin!')
         Admin.getAdminById(id, function(err, user) {
             done(err, user);
         });

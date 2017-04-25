@@ -22,6 +22,7 @@ const student = require('./routes/students')
 const register = require('./routes/register')
 const business = require('./routes/businesses')
 const admin = require('./routes/admins')
+const search = require('./routes/search')
 
 const app = express()
 
@@ -79,6 +80,7 @@ app.use('/admin', admin)
 app.use('/student', student)
 app.use('/register', register)
 app.use('/business', business)
+app.use('/search', search)
 
 app.listen(process.env.PORT || 5000, () => {
     console.log('Server started.')

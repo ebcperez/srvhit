@@ -11,7 +11,8 @@ const StudentSchema = new Schema({
         unique: true,
     },
     account_id: {
-        type: Schema.Types.ObjectId
+        type: Schema.Types.ObjectId,
+        unique: true
     },
     password: {
         type: String
@@ -70,6 +71,10 @@ const StudentSchema = new Schema({
         work_experience: {
             type: [String]
         },
+   },
+
+   tags: {
+       type: [String]
    },
    
    //Information on Students education

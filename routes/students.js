@@ -8,6 +8,48 @@ const app = express()
 
 const Student = require('../models/student')
 
+//dashboard
+router.get('/dashboard', ensureAuthenticated, (req, res) => {
+    res.render('student/dashboard_student', {user: req.user})
+})
+
+//update profile
+router.post('/dashboard', (req, res) => {
+    let newtags = req.body.tags
+    let updateId = req.user._id
+    Student.getStudentById(updateId ,(err, user) => {
+        //console.log(user.contact_info.email)
+        Student.findOneAndUpdate(
+            {
+                'contact_info.email': user.contact_info.email
+            },
+            {
+                $addToSet: {
+                    'tags': newtags
+                }
+            },
+            {
+                returnNewDocument: true
+            },
+            function(err, doc) {
+                if(err) console.log(err)
+                else {
+                    console.log(doc)
+                }
+            }
+        )
+    })
+    res.redirect('/student/dashboard')
+})
+
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next()
+    } else {
+        res.redirect('/user/login')
+    }
+}
+
 //.edu email validator
 app.use(expressValidator({
  customValidators: {
@@ -19,7 +61,7 @@ app.use(expressValidator({
 
 //get register view
 router.get('/register_student', (req, res) => {
-    res.render('talent/register_student')
+    res.render('student/register_student')
 })
 
 //post student registration form
