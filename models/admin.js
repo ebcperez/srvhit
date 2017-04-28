@@ -41,7 +41,7 @@ module.exports.createAdmin = (newAdmin, callback) => {
 }
 
 //find the admin in the database by name
-module.exports.getAdminByName = (name, callback) => {
+module.exports.getAdminByUserame = (username, callback) => {
     let query = {username: username}
     Admin.findOne(query, callback)
 }

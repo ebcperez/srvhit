@@ -8,7 +8,10 @@ const Admin = require('../models/admin')
 
 //admin dashboard
 router.get('/', (req, res) => {
-    res.send('admin dashboard')
+    User.find({}, 'username contact_info account_type company_name', (err, docs) => {
+        if (err) throw err
+        res.send('admin/dashboard')
+    })
 })
 
 //get register view
@@ -18,14 +21,13 @@ router.get('/register_admin', (req, res) => {
 
 //post admin registration form
 router.post('/register_admin', (req, res) => {
-    let name = req.body.name
+    let username = req.body.username
     let phone = req.body.phone
     let email = req.body.email
     let password = req.body.password
     let password2 = req.body.password2
 
     //validation
-    req.checkBody('name', 'Company name is required.').notEmpty()
     req.checkBody('phone', 'Phone is required.').notEmpty()
     req.checkBody('email', 'Email is required.').notEmpty()
     req.checkBody('email', 'Email is not valid.').isEmail()
@@ -41,7 +43,7 @@ router.post('/register_admin', (req, res) => {
     } else {
         //else create new admin
         let newAdmin = new Admin({
-            username: name,
+            username: username,
             contact_info: {
                 email: email, 
                 phone: phone,
