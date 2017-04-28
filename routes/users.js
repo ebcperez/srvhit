@@ -26,14 +26,9 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
     if (req.user.account_type === 'student') {
         res.redirect('/student/dashboard')
     }
-    if (req.user.admin) {
+    if (req.user.account_type === 'admin') {
         //render admin page with database documents
-        User.find({}, 'name username address contact_info account_type', (err, docs) => {
-            if (err) throw err
-            else {
-                res.render('admin', {docs})
-            }
-        })
+        res.redirect('/admin/dashboard')
     }
 })
 //passed into function above as parameter
@@ -56,7 +51,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
                 if (err) throw err
                 //if username not found in database check the admin database
                 if (!business) {
-                    Admin.getAdminByName(username, function(err, admin) {
+                    Admin.getAdminByUsername(username, function(err, admin) {
                         if (err) throw err
                         //if username not found in database return error message
                         if (!admin) {
