@@ -5,12 +5,13 @@ const expressValidator = require('express-validator')
 const mongoose = require('mongoose')
 
 const Admin = require('../models/admin')
+const User = require('../models/user')
 
 //admin dashboard
-router.get('/', (req, res) => {
+router.get('/dashboard', (req, res) => {
     User.find({}, 'username contact_info account_type company_name', (err, docs) => {
         if (err) throw err
-        res.send('admin/dashboard')
+        res.render('admin/dashboard_admin', {docs})
     })
 })
 
