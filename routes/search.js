@@ -30,6 +30,17 @@ router.get('/', ensureAuthenticated, (req, res) => {
     }
 })
 
+//search for students
+router.post('/students', (req, res) => {
+    Student.find({'username': 'earl'}, (err, docs) => {
+        if (err) throw err
+        else {
+            console.log(docs)
+            res.render('search/search_results', {users: docs})
+        }
+    })
+})
+
 //passed into function above as parameter
 //prevents user from accessing search if not logged in
 function ensureAuthenticated(req, res, next) {

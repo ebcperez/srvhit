@@ -91,6 +91,15 @@ const StudentSchema = new Schema({
    }
 })
 
+//text indexes for text search
+StudentSchema.index({
+        'about.name.first': 'text', 
+        'education.degree': 'text', 
+        'tags': 'text',
+        'about.location.zipcode': 'text',
+        'username': 'text'
+    })
+
 var Student = module.exports = mongoose.model('Student', StudentSchema, 'users')
 
 module.exports.createStudent = (newStudent, callback) => {
