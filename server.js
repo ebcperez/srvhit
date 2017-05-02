@@ -12,7 +12,7 @@ const LocalStrategy = require('passport-local').Strategy
 //database
 const mongo = require('mongodb')
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://admin:adminpass@ds145659.mlab.com:45659/heroku_9xzsm75k')
+mongoose.connect('mongodb://jned:jned123@ds145659.mlab.com:45659/heroku_9xzsm75k')
 //mongoose.connect('mongodb://127.0.0.1:27017/loginapp')
 
 //route paths
@@ -22,7 +22,6 @@ const student = require('./routes/students')
 const register = require('./routes/register')
 const business = require('./routes/businesses')
 const admin = require('./routes/admins')
-const search = require('./routes/search')
 
 const app = express()
 
@@ -52,7 +51,7 @@ app.use(expressValidator({
         var namespace = param.split('.')
         , root = namespace.shift()
         , formParam = root
-        
+
         while(namespace.length) {
             formParam += '[' + namespace.shift() + ']'
         }
@@ -76,11 +75,10 @@ app.use((req, res, next) => {
 
 app.use('/', index)
 app.use('/user', user)
-app.use('/admin', admin)
+app.use('./admin', admin)
 app.use('/student', student)
 app.use('/register', register)
 app.use('/business', business)
-app.use('/search', search)
 
 app.listen(process.env.PORT || 5000, () => {
     console.log('Server started.')

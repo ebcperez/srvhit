@@ -1,5 +1,10 @@
+*{
+  margin: 0;
+  padding:0;
+}
+
 /* Space out content a bit */
-body {
+body{
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -24,12 +29,140 @@ body {
   line-height: 40px;
 }
 
-/* Custom page footer */
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+
+
+/************Search cards*********/
+
+
+div.all-cards{
+width: 100%;
+max-height: 900px;
+display: flex;
+flex-direction: row;
+flex-wrap:wrap;/*
+-webkit-column-count: 2; /* Chrome, Safari, Opera
+-moz-column-count: 2; /* Firefox
+column-count: 2;
+-webkit-column-break-inside: avoid;
+page-break-inside: avoid;
+break-inside: avoid;
+break-inside: avoid-column;
+-webkit-column-break-inside: avoid;
+
+-webkit-column-gap: 40px;*/
 }
+
+a.uiCard{
+margin: 0;
+background-color: lightgrey;
+min-height: 0;
+background: #fff;
+border-radius: .28571429rem;
+overflow: scroll;
+display: inline-block;
+width: 30%;
+height: 235px!important;
+margin-bottom: 30px
+}
+
+a.uiCard:nth-child(3n-1) {
+  flex-grow: 1;
+  width: 40%;
+  padding: 0 5%;
+}
+
+div.cardHeader{
+width: 200px;
+margin: 0;
+}
+a.uiCard .content{
+ -webkit-box-flex: 1;
+ -ms-flex-positive: 1;
+ flex-grow: 1;
+ padding: 1em 1em;
+ box-shadow: none;
+ font-size: 1em;
+ height:230px;
+ width: 100%;/*320px;*/
+ border: 1px solid #dbdbdb;
+ border-width: thin;
+ border-color: inherit;
+ border-radius: .25em;
+ box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+ left: 30px;
+ border-color: #dbdbdb!important;
+}
+
+
+a.uiCard :hover{
+  background-color: lightgrey;
+}
+
+.studentImage{
+ height:60px;
+ width:60px;
+ margin-right: 10px;
+
+}
+.head_right{
+display: inline-block;
+margin-left: 20px;
+
+}
+.head_right img{
+margin: 0;
+}
+
+
+/***************END CARDS*************/
+
+
+/*search bar*/
+input[type=text], select {
+    width: 45%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+
+}
+
+.uiButton {
+    width: 17.5%;
+    background-color: #green;
+    height: 46px;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    display: inline-block;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    float: right;
+
+}
+.uiButton :hover {
+    background-color: #45a049;
+}
+
+.uiDropdown, select{
+  height: 46px;
+  padding: 14px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 18%;
+  border: 1px solid rgba(34,36,38,.15);
+    border-radius: .28571429rem;
+    -webkit-transition: box-shadow .1s ease,width .1s ease;
+    transition: box-shadow .1s ease,width .1s ease;
+}
+
 
 /* Main marketing message and sign up button */
 .jumbotron {
@@ -53,6 +186,18 @@ body {
   margin-top: 0;
 }
 
-footer {
-  margin-top: 40px;
+.footer {
+  padding-top: 19px;
+  margin-top: 10%;
+  height: 20px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  position: relative;
+
+}
+.footer p{
+    text-align: center;
 }
