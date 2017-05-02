@@ -6,15 +6,45 @@
     </div>
 </form>
 -->
-{{#each users}}
-    <li class="list-group-item">
-        {{#if username}}
-        Username: {{username}}<br>
-        {{/if}}
-        {{#if company_name}}
-        Company: {{company_name}}<br>
-        {{/if}}
-        Email: {{contact_info.email}}<br>
-        Account Type: {{account_type}}
-    </li>
-{{/each}}
+<div class="searchBar">
+<form action="/search/student/filter" method="post">
+  <input type="text" id="search_bar" placeholder="search..." maxlength="15" autocomplete="on" onmousedown="action();">
+  <i class="search icon"></i>
+  <select class="uiDropdown">
+    <option value="">Role</option>
+    <option value="4">Software Engineering</option>
+    <option value="3">Mechanical Engineering</option>
+    <option value="2">Security</option>
+    <option value="1">Design</option>
+    <option value="0">Finance</option>
+  </select>
+  <select class="uiDropdown">
+    <option value="">Graduation</option>
+    <option value="3">2017</option>
+    <option value="2">2018</option>
+    <option value="1">2019</option>
+    <option value="0">2020</option>
+  </select>
+  <input type= "submit" class="uiButton">
+</div>
+</form>
+<!-- Student Cards -->
+<div class="all-cards">
+  {{#each users}}
+  <a class="uiCard" >
+  <div class="content">
+    <div class="cardHeader">
+      <img class="studentImage" src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png">
+      <div class="head_right">
+      <h4>{{company_name}}</h4>
+      <h6>School: Sac Sate </h6>
+       </div>
+    </div>
+    </div>
+  {{/each}}
+    </div>
+
+  </a>
+</div>
+
+<!-- End of student cards-->

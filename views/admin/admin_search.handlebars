@@ -7,18 +7,20 @@
         <button type="submit" class="btn btn-default">Submit</button>
     </div>
 </form>
-<div class="list-group"> <!--Data being dropped -->
-    {{#each users}}
-        <form method="post" action="/search/admin_filter">
-        <div class="form-group">
-            <button type="submit" class="btn btn-default">
-                <a class="list-group-item">
-                    Email: {{contact_info.email}}<br>
-                    Account Type: {{account_type}}<br>
-                    Location: {{about}}
-                </a>
-            </button>
-        </div>
-</form>
-    {{/each}}
+<!-- Student Cards -->
+<div class="all-cards">
+  {{#each users}}
+  <a class="uiCard" >
+  <div class="content">
+    <div class="cardHeader">
+      <img class="studentImage" src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png">
+      <div class="head_right">
+      <h4>{{account_type}}</h4>
+      <h6>School: Sac Sate </h6>
+       </div>
+    </div>
+    </div>
+  {{/each}}
+    </div>
+  </a>
 </div>
