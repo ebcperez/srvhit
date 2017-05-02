@@ -7,37 +7,59 @@ const mongoose = require('mongoose')
 const Admin = require('../models/admin')
 const Student = require('../models/student')
 const Business = require('../models/business')
+const User = require('../models/user')
 
 //displays user accounts
 router.get('/', ensureAuthenticated, (req, res) => {
     //if business, display students
     if (req.user.account_type === 'business') {
-        Student.find({'account_type': 'student'}, 'username contact_info account_type tags', (err, docs) => {
+        Student.find({'account_type': 'student'}, (err, docs) => {
             if (err) throw err
             else {
-                res.render('search/search_results', {users: docs})
+                res.render('business/business_search', {users: docs})
             }
         })
     }
     //if student, display businesses
     if (req.user.account_type === 'student') {
-        Business.find({'account_type': 'business'}, 'company_name contact_info account_type', (err, docs) => {
+        Business.find({'account_type': 'business'}, (err, docs) => {
             if (err) throw err
             else {
-                res.render('search/search_results', {users: docs})
+                res.render('student/student_search', {users: docs})
             }
+        })
+    }
+    //if admin, display all
+    if (req.user.account_type === 'admin') {
+        User.find({}, (err, docs) => {
+            if (err) throw err
+            res.render('admin/admin_search', {users: docs})
         })
     }
 })
 
-//search for students
-router.post('/students', (req, res) => {
-    Student.find({'username': 'earl'}, (err, docs) => {
+//filter student search results
+router.post('/student/filter', (req, res) => {
+    Business.find({'about.location.zipcode': req.body.zipcode}, (err, docs) => {
         if (err) throw err
-        else {
-            console.log(docs)
-            res.render('search/search_results', {users: docs})
-        }
+        res.render('student/student_search', {docs})
+    })
+})
+
+//filter business search results
+router.post('/business/filter', (req, res) => {
+    Student.find({'about.location.zipcode': req.body.zipcode}, (err, docs) => {
+        if (err) throw err
+        res.render('business/business_search', {docs})
+    })
+})
+
+//filter admin database results
+router.post('/admin_filter', (req, res) => {
+    console.log(req.body.filter)
+    User.find({'account_type': req.body.filter}, (err, docs) => {
+        if (err) throw err
+        res.render('admin/admin_search', {users: docs})
     })
 })
 

@@ -90,7 +90,7 @@ const StudentSchema = new Schema({
         },
    }
 })
-
+/*
 //text indexes for text search
 StudentSchema.index({
         'about.name.first': 'text', 
@@ -98,7 +98,7 @@ StudentSchema.index({
         'tags': 'text',
         'about.location.zipcode': 'text',
         'username': 'text'
-    })
+})*/
 
 var Student = module.exports = mongoose.model('Student', StudentSchema, 'users')
 

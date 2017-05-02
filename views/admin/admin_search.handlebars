@@ -1,21 +1,18 @@
-<form method="post" action="/search/filter">
+<h4>Database</h4>
+<form method="post" action="/search/admin_filter">
     <div class="form-group">
         <label class="checkbox-inline"><input type="checkbox" value="student" name="filter">Student</label>
         <label class="checkbox-inline"><input type="checkbox" value="business" name="filter">Business</label>
         <label class="checkbox-inline"><input type="checkbox" value="admin" name="filter">Admin</label>
-        <input type="text" class="form-control" placeholder="zipcode" name="zipcode">
         <button type="submit" class="btn btn-default">Submit</button>
     </div>
 </form>
-{{#each users}}
-    <li class="list-group-item">
-        {{#if username}}
-        Username: {{username}}<br>
-        {{/if}}
-        {{#if company_name}}
-        Company: {{company_name}}<br>
-        {{/if}}
-        Email: {{contact_info.email}}<br>
-        Account Type: {{account_type}}
-    </li>
-{{/each}}
+<div class="list-group"> <!--Data being dropped -->
+    {{#each users}}
+        <a href="#" class="list-group-item">
+            Email: {{contact_info.email}}<br>
+            Account Type: {{account_type}}<br>
+            Location: {{about}}
+        </a>
+    {{/each}}
+</div>
