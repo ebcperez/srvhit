@@ -35,7 +35,6 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
 //prevents user from accessing dashboard if not logged in
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-        console.log(req.user)
         return next()
     } else {
         res.redirect('/user/login')
