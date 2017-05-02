@@ -63,6 +63,11 @@ router.post('/admin_filter', (req, res) => {
     })
 })
 
+//look at profile
+router.get('/profile', (req, res) => {
+    res.render('search/profile_view')
+})
+
 //passed into function above as parameter
 //prevents user from accessing search if not logged in
 function ensureAuthenticated(req, res, next) {
