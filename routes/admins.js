@@ -9,10 +9,7 @@ const User = require('../models/user')
 
 //admin dashboard
 router.get('/dashboard', (req, res) => {
-    User.find({}, 'username contact_info account_type company_name', (err, docs) => {
-        if (err) throw err
-        res.render('admin/dashboard_admin', {docs})
-    })
+    res.render('admin/dashboard_admin')
 })
 
 //get register view
