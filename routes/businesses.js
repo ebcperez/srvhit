@@ -68,7 +68,7 @@ router.post('/register_business', (req, res) => {
                 phone: phone, 
                 preference: preference
             },
-            company_name: name,
+            username: name,
             password: password,
             account_type: 'business'
         })

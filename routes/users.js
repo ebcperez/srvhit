@@ -43,50 +43,19 @@ function ensureAuthenticated(req, res, next) {
 //log in authentication
 passport.use(new LocalStrategy(function(username, password, done) {
     //check account type
-    Student.getStudentByUsername(username, function(err, student) {
+    User.getUserByUsername(username, function(err, user) {
         if (err) throw err
-        //if username not found in student database look in business database
-        if (!student) {
-            Business.getBusinessByName(username, function(err, business) {
-                if (err) throw err
-                //if username not found in database check the admin database
-                if (!business) {
-                    Admin.getAdminByUsername(username, function(err, admin) {
-                        if (err) throw err
-                        //if username not found in database return error message
-                        if (!admin) {
-                            return done(null, false, {message: 'Unknown User'})
-                        }
-                        Admin.comparePassword(password, admin.password, function(err, isMatch) {
-                            if (err) throw err
-                            if (isMatch) {
-                                return done(null, admin)
-                            } else {
-                                return done(null, false, {message: 'Invalid password'})
-                            }
-                        })
-                    })
-                }    
-                Business.comparePassword(password, business.password, function(err, isMatch) {
-                    if (err) throw err
-                    if (isMatch) {
-                        return done(null, business)
-                    } else {
-                        return done(null, false, {message: 'Invalid password'})
-                    }
-                })
-            })
-        } else {
-            //compare passwords
-            Student.comparePassword(password, student.password, function(err, isMatch) {
-                if (err) throw err
-                if (isMatch) {
-                    return done(null, student)
-                } else {
-                    return done(null, false, {message: 'Invalid password'})
-                }
-            })
+        if (!user) {
+            return done(null, false, {message: 'Unknown User'})
         }
+        User.comparePassword(password, user.password, function(err, isMatch) {
+            if (err) throw err
+            if (isMatch) {
+                return done(null, user)
+            } else {
+                return done(null, false, {message: 'Invalid password'})
+            }
+        })
     })
 }))
 
