@@ -1,4 +1,4 @@
-<h2 class="page-header">Register</h2>
+
 {{#if errors}}
     {{#each errors}}
         <div class="alert alert-danger">
@@ -7,38 +7,63 @@
         </div>
     {{/each}}
 {{/if}}
-<form method="post" action="/business/register_business">
-    <div class="form-group">
-        <label>Company Name</label>
-        <input type="text" class="form-control" placeholder="name" name="name">
-    </div>
+<form method="post" action="/business/register_business" class="centered-form">
+<h2 class="page-header">Register</h2>
+	<div class="form-group">
+		<div class="flex-row">
+			<div>
+				<label>Username</label>
+				<input type="text" class="form-control" name="username" />
+			</div>
+			<div>
+				<label>Company Name</label>
+				<input type="text" class="form-control" placeholder="name" name="name">
+			</div>
+		</div>
+	</div>
     <!-- contact info -->
     <div class="form-group">
-        <label>Phone</label>
-        <input type="text" class="form-control" placeholder="phone" name="phone">
-    </div>
-    <div class="form-group">
-        <label>Email</label>
-        <input type="text" class="form-control" placeholder="email" name="email">
+		<div class="flex-row">
+			<div>
+				<label>Email</label>
+				<input type="text" class="form-control" placeholder="email" name="email">
+			</div>
+			<div>
+				<label>Phone</label>
+				<input type="text" class="form-control" placeholder="phone" name="phone">
+			</div>
+		</div>
     </div>
     <div class="form-group">
         <label>Website (Optional)</label>
         <input type="text" class="form-control" placeholder="Website Link" name="website1">
     </div>
+	<!--
     <div class="form-group">
         <label>Preferred Method</label><br>
         <input type="radio" name="preference" value="Email" checked> Email<br>
         <input type="radio" name="preference" value="Phone"> Phone<br>
-    </div>
+    </div>-->
     <!-- address-line input-->
     <div class="form-group">
         <label class="control-label">Address</label>
-        <div class="controls">
+		<div class="address-block">
+			<div class="flex-row">
+				<input type="text" name="address" placeholder="Street" />
+			</div>
+			<div class="flex-row">
+				<input type="text" name="city" placeholder="City" style="flex-grow:1" />
+				<input type="text" name="state" placeholder="State" maxlength="2" style="width: 15%;flex-grow:1" />
+				<input type="text" name="postalcode" placeholder="Zip" maxlength="5" style="width: 30%;flex-grow:1" />
+			</div>
+		</div>
+
+        <!--<div class="controls">
             <input id="address" name="address" type="text" placeholder="address line" class="form-control">
             <p class="help-block">Street address, P.O. box, company name, Apartment, suite , unit, building, floor, etc.</p>
         </div>
     </div>
-    <!-- city input-->
+    <!-- city input
     <div class="form-group">
         <label class="control-label">City / Town</label>
         <div class="controls">
@@ -46,37 +71,44 @@
             <p class="help-block"></p>
         </div>
     </div>
-    <!-- postal-code input-->
+    <!-- postal-code input
     <div class="form-group">
         <label class="control-label">Zip / Postal Code</label>
         <div class="controls">
             <input id="postal-code" name="postalcode" type="text" placeholder="zip or postal code" class="form-control">
             <p class="help-block"></p>
-        </div>
+        </div>-->
     </div>
     <!-- industry input-->
     <div class="form-group">
-        <label class="control-label">Industry</label>
-        <div class="controls">
-            <input id="industry" name="industry" type="text" placeholder="industry" class="form-control">
-            <p class="help-block"></p>
-        </div>
+		<div class="flex-row">
+			<div>
+				<label class="control-label">Industry</label>
+				<div class="controls">
+					<input id="industry" name="industry" type="text" placeholder="industry" class="form-control">
+					<p class="help-block"></p>
+				</div>
+			</div>
+			<div>
+				<label class="control-label">Company Size</label>
+				<div class="controls">
+					<input id="size" name="size" type="number" placeholder="number of employees" class="form-control" min="1">
+					<p class="help-block"></p>
+				</div>
+			</div>
+		</div>
     </div>
-    <!-- company size-->
     <div class="form-group">
-        <label class="control-label">Company Size</label>
-        <div class="controls">
-            <input id="size" name="size" type="number" placeholder="number of employees" class="form-control" min="1">
-            <p class="help-block"></p>
-        </div>
-    </div>
-    <div class="form-group">
-        <label>Password</label>
-        <input type="password" class="form-control" placeholder="Password" name="password">
-    </div>
-    <div class="form-group">
-        <label>Confirm Password</label>
-        <input type="password" class="form-control" placeholder="Password" name="password2">
+		<div class="flex-row">
+			<div>
+				<label>Password</label>
+				<input type="password" class="form-control" placeholder="Password" name="password">
+			</div>
+			<div>
+				<label>Confirm Password</label>
+				<input type="password" class="form-control" placeholder="Password" name="password2">
+			</div>
+		</div>
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
