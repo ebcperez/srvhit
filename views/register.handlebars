@@ -1,4 +1,4 @@
-<h2 class="page-header">Register</h2>
+
 {{#if errors}}
     {{#each errors}}
         <div class="alert alert-danger">
@@ -7,9 +7,25 @@
         </div>
     {{/each}}
 {{/if}}
-<div class="panel panel-default">
-  <div class="panel-body"><a href="/business/register_business">Business</a></div>
-</div>
-<div class="panel panel-default">
-  <div class="panel-body"><a href="/student/register_student">Student</a></div>
+<div class="centered-form">
+<h2 class="page-header">Register</h2>
+	<div class="flex-row">
+	<div>
+		<div class="panel panel-default">
+		  <div class="panel-body div-button" id="business">Business</div>
+		</div>
+		</div>
+		<div class="panel panel-default">
+		  <div class="panel-body div-button" id="student">Student</div>
+		</div>
+	</div>
+	
+	<script>
+		$('#student').click(function () {
+			window.location.href = '/student/register_student';
+		});
+		$('#business').click(function () {
+			window.location.href = '/business/register_business';
+		});
+		</script>
 </div>
