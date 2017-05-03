@@ -56,7 +56,6 @@ router.post('/business/filter', (req, res) => {
 
 //filter admin database results
 router.post('/admin_filter', (req, res) => {
-    console.log(req.body.filter)
     User.find({'account_type': req.body.filter}, (err, docs) => {
         if (err) throw err
         res.render('admin/admin_search', {users: docs})
