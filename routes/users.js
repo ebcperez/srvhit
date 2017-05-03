@@ -37,7 +37,7 @@ function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next()
     } else {
-        res.redirect('/user/login')
+        res.redirect('/')
     }
 }
 //log in authentication
@@ -85,7 +85,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 //redirects user to dashboard if logged in succesfully, log in page is rerendered otherwise
-router.post('/login', passport.authenticate('local', {successRedirect: '/user/dashboard', failureRedirect: '/user/login', failureFlash: true}), 
+router.post('/login', passport.authenticate('local', {successRedirect: '/user/dashboard', failureRedirect: '/', failureFlash: true}), 
     function(req, res) {
         res.redirect('/')
     }
@@ -94,7 +94,7 @@ router.post('/login', passport.authenticate('local', {successRedirect: '/user/da
 router.get('/logout', function(req, res) {
     req.logout()
     req.flash('success_msg', 'You are logged out.')
-    res.redirect('/user/login')
+    res.redirect('/')
 })
 
 module.exports = router

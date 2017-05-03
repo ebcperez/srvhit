@@ -1,1 +1,52 @@
-{{user}}
+<form method="post" action="/student/dashboard">
+	<div class="flex-row">
+		<section class="info-panel">
+			<h2>{{ user.about.name.first }} {{ user.about.name.last }}</h2>
+			<p>{{ user.contact_info.email }}<br />{{ user.contact_info.websites }}</p>
+		</section>
+		<div class="content-panel">
+			<section>
+				<h3>About</h3>
+				<div class="flex-row indent">
+					<div style="flex-grow: 1">
+						<label>City</label>
+						<input type="text" class="form-control" placeholder="city" name="city" value="{{ user.about.location.city }}">
+					</div>
+					<div style="width: 30%">
+						<label class="control-label">Zip / Postal Code</label>
+						<div class="controls">
+							<input id="postal-code" name="postalcode" type="text" placeholder="zip or postal code" class="form-control" value="{{ user.about.location.zipcode }}">
+							<p class="help-block"></p>
+						</div>
+					</div>
+				</div>
+				<div class="indent">
+					<label>About Me</label>
+					<textarea value="{{ user.about.text }}"></textarea>
+				</div>
+			</section>
+			<section id="experience-panel">
+				<h3>Experience</h3>
+				<div class="indent">
+					<label>Work Experience</label>
+					<textarea value="{{ user.experience.work_experience }}"></textarea>
+					<br /><br />
+					
+					<label>Tools</label>
+					<textarea value="{{ user.experience.tools }}"></textarea>
+					<br /><br />
+					
+					<label>Languages</label>
+					<textarea value="{{ user.experience.languages }}"></textarea>
+				</div>
+			</section>
+			<section>
+				<h3>Education</h3>
+				<div class="indent">
+					[Placeholder for school]
+				</div>
+			</section>
+		</div>
+	</div>
+			
+</form>
