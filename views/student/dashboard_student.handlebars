@@ -8,12 +8,12 @@
 			<section>
 				<h3>About</h3>
 				<div class="flex-row indent">
-					<div style="flex-grow: 1">
+					<div style="flex-grow: 1;padding-right: 20px;">
 						<label>City</label>
 						<input type="text" class="form-control" placeholder="city" name="city" value="{{ user.about.location.city }}">
 					</div>
 					<div style="width: 30%">
-						<label class="control-label">Zip / Postal Code</label>
+						<label>Zip / Postal Code</label>
 						<div class="controls">
 							<input id="postal-code" name="postalcode" type="text" placeholder="zip or postal code" class="form-control" value="{{ user.about.location.zipcode }}">
 							<p class="help-block"></p>
