@@ -149,7 +149,7 @@ background-color: lightgrey;
 min-height: 0;
 background: #fff;
 border-radius: .28571429rem;
-overflow: scroll;
+overflow: hidden;
 display: inline-block;
 width: 30%;
 height: 235px!important;
