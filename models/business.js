@@ -73,6 +73,9 @@ const BusinessSchema = new Schema({
         industry: {
             type: String
         },
+        text: {
+            type: String
+        }
         //low priority
         /*photo: {
 
