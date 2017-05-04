@@ -8,9 +8,10 @@
 }
 
 /* Space out content a bit */
-body {
+body{
   padding-top: 20px;
   padding-bottom: 20px;
+  height: 100vh;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -25,6 +26,7 @@ body {
 .header {
   padding-bottom: 20px;
   border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 10px;
 }
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
@@ -33,61 +35,95 @@ body {
   line-height: 40px;
 }
 
-.flex-row {
-	display: flex;
-	flex-direction: row;
-}
-
 .centered-form {
-	width: 700px;
+	max-width: 700px;
+	width: calc(100% - 20px);
 	margin: auto;
 }
 
-.centered-form .flex-row > :first-child {
+.flex-row {
+	display:flex;
+	flex-direction: row;
+}
+
+.flex-row > div:last-child{
+	width: calc(50% - 10px);
+}
+
+.flex-row > div:first-child{
 	width: calc(50% + 10px);
 	padding-right: 20px;
 }
 
-.centered-form .flex-row > :last-child {
-	width: calc(50% - 10px);
+.div-button {
+	text-align: center;
+	cursor: pointer;
 }
 
-.centered-form input[type=text] {
+.div-button::after {
+	display: block;
+	
+	height: 100%;
 	width: 100%;
+	box-shadow: 0 5px 15px rgba(0,0,0,1);
+	opacity: 0;
+	transition: opacity 0.3s ease-in-out;
 }
 
-.centered-form h2 {
-	margin-top: 10px
+.div-button:hover::after {
+    opacity: 1;
+}
+
+.page-content {
+	height: calc(100% - 111px)!important;
+	overflow: auto;
+}
+
+.container {
+	height: 100%;
+	position: relative;
 }
 
 .info-panel {
-	padding: 10px;
 	width: 300px;
-	background: rgba(200, 220, 255, 1)
+	background: rgba(200, 220, 255, 0.4);
+	padding: 10px;
+}
+
+.info-panel h2 {
+	margin: 0;
 }
 
 .content-panel {
 	padding: 10px;
-	flex-grow: 1;
+	flex-grow: 1
 }
 
-.content-panel .indent {
-	margin-left: 30px
+.content-panel section {
+	padding: 10px;
+	margin-bottom: 30px;
 }
 
-.content-panel label {
-	display: block;
-}
-
-.content-panel textarea {
+.content-panel section textarea {
 	width: 100%;
-	height: 60px;
+	height: 80px;
 	resize: none;
 	border: 1px solid #ccc;
 	border-radius: 4px;
 }
 
-/*New changes */
+.content-panel section h3 {
+	margin: 0;
+	margin-bottom: 7px
+}
+
+.indent {
+	margin-left: 20px;
+}
+
+
+/************Search cards*********/
+
 
 div.all-cards{
 width: 100%;
@@ -103,6 +139,7 @@ page-break-inside: avoid;
 break-inside: avoid;
 break-inside: avoid-column;
 -webkit-column-break-inside: avoid;
+
 -webkit-column-gap: 40px;*/
 }
 
@@ -185,7 +222,7 @@ input[type=text], select {
 
 .uiButton {
     width: 17.5%;
-    background-color: green;
+    background-color: #green;
     height: 46px;
     color: white;
     padding: 14px 20px;
@@ -196,6 +233,7 @@ input[type=text], select {
     cursor: pointer;
     text-align: center;
     float: right;
+
 }
 .uiButton :hover {
     background-color: #45a049;
@@ -239,52 +277,23 @@ input[type=text], select {
   margin-top: 0;
 }
 
-.footer {
-  padding-top: 19px;
-  margin-top: 10%;
+footer {
+  margin-top: 20px;
   height: 20px;
   color: #777;
   border-top: 1px solid #e5e5e5;
   bottom: 0;
   width: 100%;
   background: white;
-  position: relative;
-
+  position: absolute;
+	height: 20px;
+	bottom: 0;
 }
-.footer p{
+footer p{
     text-align: center;
 }
 
-/*New changes end */
 
-/* Custom page footer */
-
-
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-}
-.jumbotron .btn {
-  padding: 14px 24px;
-  font-size: 21px;
-}
-
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
-}
-.marketing p + h4 {
-  margin-top: 28px;
-}
-
-.page-header {
-  margin-top: 0;
-}
-
-footer {
-  margin-top: 40px;
-}
 
 /**********    Splash Styles  ***********/
 
