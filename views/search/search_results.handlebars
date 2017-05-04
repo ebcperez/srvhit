@@ -1,1 +1,20 @@
-{{users}}
+<form method="post" action="/search/filter">
+    <div class="form-group">
+        <label class="checkbox-inline"><input type="checkbox" value="student" name="filter">Student</label>
+        <label class="checkbox-inline"><input type="checkbox" value="business" name="filter">Business</label>
+        <label class="checkbox-inline"><input type="checkbox" value="admin" name="filter">Admin</label>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </div>
+</form>
+{{#each users}}
+    <li class="list-group-item">
+        {{#if username}}
+        Username: {{username}}<br>
+        {{/if}}
+        {{#if about.companySize}}
+        Company: {{about.companySize}}<br>
+        {{/if}}
+        Email: {{contact_info.email}}<br>
+        Account Type: {{account_type}}
+    </li>
+{{/each}}

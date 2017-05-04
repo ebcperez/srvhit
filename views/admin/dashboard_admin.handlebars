@@ -1,39 +1,48 @@
 <div class="col-sm-3 sidenav">
-  <div class="input-group">
-    <input type="text" class="form-control" placeholder="Search database..">
-    <span class="input-group-btn">
-      <button class="btn btn-default" type="button">
-        <span class="glyphicon glyphicon-search"></span>
-        </button>
-    </span>
-    <div class="results"></div>
- </div>
   <ul class="nav nav-pills nav-stacked">
-      <li class="active"><a data-toggle="pill" href="#profile">Profile</a></li>
-      <li><a data-toggle="pill" href="#preferences">Preferences</a></li>
-      <li><a data-toggle="pill" href="#menu2">Student Accounts</a></li>
-      <li><a data-toggle="pill" href="#menu3">Business Accounts</a></li>
+      <li><a data-toggle="pill" href="#profile">Profile</a></li>
+      <li><a data-toggle="pill" href="#createadmin">Create Admin</a></li>
   </ul>
 </div>
 
 <div class="tab-content col-sm-9">
   <div id="profile" class="tab-pane fade in active">
     <h3>Admin Profile</h3>
-    <h4>All Accounts</h4>
-    <div class="list-group"> <!--Data being dropped -->
-        {{#each docs}}
-            <a href="#" class="list-group-item">Email: {{contact_info.email}} | Account Type: {{account_type}}</a>
+    <a class="list-group-item">Username: {{user.username}}</a>
+    <a class="list-group-item">Email: {{user.contact_info.email}}</a>
+    <a class="list-group-item">Account Type: {{user.account_type}}</a>
+  </div>
+  <div id="createadmin" class="tab-pane fade">
+    <h2 class="page-header">Register</h2>
+    {{#if errors}}
+        {{#each errors}}
+            <div class="alert alert-danger">
+                <i class="icon-remove-sign icon-large"></i> {{msg}}
+                <a href="#close" class="icon-remove"></a>
+            </div>
         {{/each}}
-    </div>
+    {{/if}}
+    <form method="post" action="/admin/register_admin">
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="form-control" placeholder="Username" name="username">
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="text" class="form-control" placeholder="Email" name="email">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" placeholder="Password" name="password">
+        </div>
+        <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="password" class="form-control" placeholder="Password" name="password2">
+        </div>
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" class="form-control" placeholder="Phone Number" name="phone">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
   </div>
-  <div id="preferences" class="tab-pane fade">
-  </div>
-  <div id="menu2" class="tab-pane fade">
-    <h3>Student Accounts</h3>
-    <div class="list-group">
-    </div>
-  </div>
-  <div id="menu3" class="tab-pane fade">
-    <h3>Business Accounts</h3>
-  </div>
-</div>

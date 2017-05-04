@@ -1,0 +1,26 @@
+<h4>Database</h4>
+<form method="post" action="/search/admin_filter">
+    <div class="form-group">
+        <label class="checkbox-inline"><input type="checkbox" value="student" name="filter">Student</label>
+        <label class="checkbox-inline"><input type="checkbox" value="business" name="filter">Business</label>
+        <label class="checkbox-inline"><input type="checkbox" value="admin" name="filter">Admin</label>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </div>
+</form>
+<!-- Student Cards -->
+<div class="all-cards">
+  {{#each users}}
+  <a class="uiCard" >
+  <div class="content">
+    <div class="cardHeader">
+      <img class="studentImage" src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png">
+      <div class="head_right">
+      <h4>{{account_type}}</h4>
+      <h6>School: Sac Sate </h6>
+       </div>
+    </div>
+    </div>
+  {{/each}}
+    </div>
+  </a>
+</div>
