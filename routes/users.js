@@ -37,56 +37,25 @@ function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next()
     } else {
-        res.redirect('/user/login')
+        res.redirect('/')
     }
 }
 //log in authentication
 passport.use(new LocalStrategy(function(username, password, done) {
     //check account type
-    Student.getStudentByUsername(username, function(err, student) {
+    User.getUserByUsername(username, function(err, user) {
         if (err) throw err
-        //if username not found in student database look in business database
-        if (!student) {
-            Business.getBusinessByName(username, function(err, business) {
-                if (err) throw err
-                //if username not found in database check the admin database
-                if (!business) {
-                    Admin.getAdminByUsername(username, function(err, admin) {
-                        if (err) throw err
-                        //if username not found in database return error message
-                        if (!admin) {
-                            return done(null, false, {message: 'Unknown User'})
-                        }
-                        Admin.comparePassword(password, admin.password, function(err, isMatch) {
-                            if (err) throw err
-                            if (isMatch) {
-                                return done(null, admin)
-                            } else {
-                                return done(null, false, {message: 'Invalid password'})
-                            }
-                        })
-                    })
-                }    
-                Business.comparePassword(password, business.password, function(err, isMatch) {
-                    if (err) throw err
-                    if (isMatch) {
-                        return done(null, business)
-                    } else {
-                        return done(null, false, {message: 'Invalid password'})
-                    }
-                })
-            })
-        } else {
-            //compare passwords
-            Student.comparePassword(password, student.password, function(err, isMatch) {
-                if (err) throw err
-                if (isMatch) {
-                    return done(null, student)
-                } else {
-                    return done(null, false, {message: 'Invalid password'})
-                }
-            })
+        if (!user) {
+            return done(null, false, {message: 'Unknown User'})
         }
+        User.comparePassword(password, user.password, function(err, isMatch) {
+            if (err) throw err
+            if (isMatch) {
+                return done(null, user)
+            } else {
+                return done(null, false, {message: 'Invalid password'})
+            }
+        })
     })
 }))
 
@@ -116,7 +85,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 //redirects user to dashboard if logged in succesfully, log in page is rerendered otherwise
-router.post('/login', passport.authenticate('local', {successRedirect: '/user/dashboard', failureRedirect: '/user/login', failureFlash: true}), 
+router.post('/login', passport.authenticate('local', {successRedirect: '/user/dashboard', failureRedirect: '/', failureFlash: true}), 
     function(req, res) {
         res.redirect('/')
     }
@@ -125,7 +94,7 @@ router.post('/login', passport.authenticate('local', {successRedirect: '/user/da
 router.get('/logout', function(req, res) {
     req.logout()
     req.flash('success_msg', 'You are logged out.')
-    res.redirect('/user/login')
+    res.redirect('/')
 })
 
 module.exports = router

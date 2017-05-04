@@ -25,7 +25,7 @@ var job = {
 const BusinessSchema = new Schema({ 
 
     account_type: String,
-    company_name: {
+    username: {
         type: String,
         unique: true,
     },
@@ -100,7 +100,7 @@ module.exports.createBusiness = (newBusiness, callback) => {
 
 //find by business in database by name
 module.exports.getBusinessByName = (name, callback) => {
-    let query = {company_name: name}
+    let query = {username: name}
     Business.findOne(query, callback)
 }
 

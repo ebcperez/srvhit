@@ -1,3 +1,12 @@
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+*{
+  margin: 0;
+  padding:0;
+}
+
 /* Space out content a bit */
 body {
   padding-top: 20px;
@@ -40,7 +49,6 @@ page-break-inside: avoid;
 break-inside: avoid;
 break-inside: avoid-column;
 -webkit-column-break-inside: avoid;
-
 -webkit-column-gap: 40px;*/
 }
 
@@ -123,7 +131,7 @@ input[type=text], select {
 
 .uiButton {
     width: 17.5%;
-    background-color: #green;
+    background-color: green;
     height: 46px;
     color: white;
     padding: 14px 20px;
@@ -134,7 +142,6 @@ input[type=text], select {
     cursor: pointer;
     text-align: center;
     float: right;
-
 }
 .uiButton :hover {
     background-color: #45a049;
@@ -196,9 +203,6 @@ input[type=text], select {
 
 /*New changes end */
 
-
-
-
 /* Custom page footer */
 
 
@@ -226,4 +230,129 @@ input[type=text], select {
 
 footer {
   margin-top: 40px;
+}
+
+/**********    Splash Styles  ***********/
+
+.splash-overlay {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0,0,0,0.3);
+	display: none;
+	opacity: 0;
+	z-index: 999;
+	align-items: center;
+	justify-content: center;
+	
+	-webkit-transition: opacity 0.5s; /* Safari */
+    transition: opacity 0.5s;
+}
+
+.splash-container {
+	max-width: 400px;
+	width: calc(100% - 30px);
+	border-radius: 10px;
+	background: #dbdbdb;
+	padding: 20px;
+	margin-bottom: 30%;
+	overflow: hidden;
+	position: relative;
+}
+
+.splash-container h1 {
+	margin: auto;
+	padding: 0;
+	margin-top: 0;
+}
+
+.splash-container form {
+	width: 100%;
+}
+
+.splash-container input {
+	width: 100%;
+	margin-top: 0;
+    padding: 12px 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.splash-container input[type=submit] {
+	width: 50%;
+	padding: 5px 20px;
+	background: #ebebeb;
+	display: block;
+	margin: 10px auto 0 auto;
+}
+
+
+
+
+/********  Form Styling   ********/
+
+.centered-form input[type=text], select {
+    width: 100%;
+    margin: 0;
+    display:block;
+}
+
+.centered-form [type=submit] {
+	margin: auto;
+	display: block;
+	background: #ebebeb;
+	width: 140px;
+	margin-top:40px;
+}
+
+.content-panel input[type=text] {
+    width: 100%;
+    margin: 0;
+    display:block;
+}
+
+.address-block {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.address-block input {
+	margin: 0!important;
+	width: auto;
+	border-radius: 0;
+}
+
+.address-block [placeholder="Street"] {
+	border: none;
+	width: 100%;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+.address-block [placeholder="City"] {
+	border-bottom: none;
+	border-left: none;
+	border-top: 1px solid #ebebeb;
+	border-right: 1px solid #ebebeb;
+	width: 55%;
+	border-bottom-left-radius: 4px;
+}
+
+.address-block [placeholder="State"] {
+	border-bottom: none;
+	border-left: none;
+	border-top: 1px solid #ebebeb;
+	border-right: 1px solid #ebebeb;
+}
+
+.address-block [placeholder="Zip"] {
+	border-bottom: none;
+	border-left: none;
+	border-right: none;
+	border-top: 1px solid #ebebeb;
+	border-bottom-right-radius: 4px;
 }

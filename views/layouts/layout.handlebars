@@ -19,7 +19,8 @@
                         <li role="presentation" class="active"><a href="/user/dashboard">Dashboard</a></li>
                         <li role="presentation"><a href="/user/logout">Logout</a></li>
                         {{else}}
-                        <li role="presentation"><a href="/user/login">Login</a></li>
+                        <li role="presentation"><a href="javascript:void(0)" onclick="popLogin()">Login</a></li>
+                        <!--<li role="presentation"><a href="/user/login">Login</a></li>-->
                         <li role="presentation"><a href="/register">Register</a></li>
                         {{/if}}
                     </ul>
@@ -55,5 +56,37 @@
         </div> <!-- /container -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        {{#if user}}
+		{{else}}
+		<div class="splash-overlay">
+			<div class="splash-container">
+				<h1>SRVHIT</h1>
+				<form class="login-form" id="login" method="POST" action="/user/login" onsubmit="return validateLoginForm();">
+					<label for="username">Username:</label>
+					<input name="username" id="username" type="text" />
+					<label for="pass">Password:</label>
+					<input type="password" id="pass" name="password" />
+					<input type="submit" value="Log In" id="loginsubmit" />
+				</form>
+			</div>
+		</div>
+		<script>
+			function popLogin() {
+				$('.splash-overlay').css('display', 'flex').animate({ opacity: 1 }, { duration: 150 });
+			}
+			
+			function validateLoginForm() {
+				if($('#username').val() !== '' && $('#pass').val() !== '') {
+					$('.splash-container').animate({ opacity: 0 }, { duration: 300 });
+					setTimeout(function () {
+					$('body').animate({ opacity: 0 }, { duration: 300, complete: function () {
+							$('#login')[0].submit();
+						} });
+					}, 150);
+				}
+				return false;
+			}
+		</script>
+		{{/if}}
     </body>
 </html>
