@@ -1,9 +1,9 @@
 <form method="post" action="/student/update_profile">
 	<div class="flex-row">
 		<section class="info-panel">
-			{{#if enabled}}
-				<h4>DISABLED</h4>
-			{{/if}}
+			{{#unless user.enabled}}
+				<h4>ACCOUNT DISABLED</h4>
+			{{/unless}}
 			<h2>{{ user.about.name.first }} {{ user.about.name.last }}</h2>
 			<p>{{ user.contact_info.email }}<br />{{ user.contact_info.websites }}</p>
 			Bookmarks:<br>

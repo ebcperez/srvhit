@@ -1,7 +1,7 @@
 <form method="post" action="/student/update_profile">
 	<div class="flex-row">
 		<section class="info-panel">
-			{{#unless enabled}}
+			{{#unless user.enabled}}
 				<h1>ACCOUNT DISABLED</h1>
 			{{/unless}}
 			<h2>{{ user.username }}</h2>
