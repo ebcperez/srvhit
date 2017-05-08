@@ -4,6 +4,8 @@ const router = express.Router()
 const expressValidator = require('express-validator')
 const mongoose = require('mongoose')
 
+const app = express()
+
 const Business = require('../models/business')
 
 //dashboard
@@ -115,6 +117,19 @@ router.get('/register_business', (req, res) => {
     res.render('business/register_business')
 })
 
+app.use(expressValidator({
+    customValidators: {
+       validZipcode: function(zipcode) {
+           let temp = zipcode.substring(0, 3)
+           if(temp === '952' || temp === '953' || temp === '955' || temp === '956' || temp === '957' || temp === '958' || temp === '959') {
+               return true;    
+           } else { 
+               return false;
+           }
+        }    
+    }
+}))
+
 //post business registration form
 router.post('/register_business', (req, res) => {
     let name = req.body.username
@@ -124,11 +139,13 @@ router.post('/register_business', (req, res) => {
     let preference = req.body.preference
     let address = req.body.address
     let city = req.body.city
-    let zipcode = req.body.postalcode
+    let zipcode = req.body.zipcode
     let industry = req.body.industry
     let size = req.body.size
     let password = req.body.password
     let password2 = req.body.password2
+
+    console.log(zipcode)
 
     //validation
     req.checkBody('username', 'Company name is required.').notEmpty()
@@ -137,7 +154,8 @@ router.post('/register_business', (req, res) => {
     req.checkBody('email', 'Email is not valid.').isEmail()
     req.checkBody('address', 'Address is required.').notEmpty()
     req.checkBody('city', 'City is required.').notEmpty()
-    req.checkBody('postalcode', 'Postal Code is required.').notEmpty()
+    req.checkBody('zipcode', 'Zipcode is required.').notEmpty()
+    req.checkBody('zipcode', 'Zipcode not in the Sacramento Region').validZipcode()
     req.checkBody('industry', 'Industry is required.').notEmpty()
     req.checkBody('size', 'Company size is required.').notEmpty()
     req.checkBody('password', 'Password is required.').notEmpty()
