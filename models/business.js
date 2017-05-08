@@ -15,7 +15,7 @@ var job = {
         type: [String]
     },
     deadline: {
-        type: Date
+        type: String
     },
     jobType: {
         type: String
@@ -25,6 +25,8 @@ var job = {
 const BusinessSchema = new Schema({ 
 
     account_type: String,
+    enabled: Boolean,
+    created: String,
     username: {
         type: String,
         unique: true,
@@ -64,9 +66,6 @@ const BusinessSchema = new Schema({
                 type: String
             },
         },
-        description: {
-            type: String
-        },
         companySize: {
             type: Number
         },
@@ -80,6 +79,10 @@ const BusinessSchema = new Schema({
         /*photo: {
 
         }*/
+   },
+
+   bookmarks: {
+       type: [String]
    },
 
    //job postings

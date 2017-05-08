@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const expressValidator = require('express-validator')
 const mongoose = require('mongoose')
+const $ = require('jquery')
 
 const app = express()
 
@@ -10,12 +11,21 @@ const Student = require('../models/student')
 
 //dashboard
 router.get('/dashboard', ensureAuthenticated, (req, res) => {
-    res.render('student/dashboard_student', {user: req.user})
+    res.render('student/dashboard_student', {user: req.user.toJSON()})
 })
 
 //update profile
-router.post('/dashboard', (req, res) => {
-    let newtags = req.body.tags
+router.post('/update_profile', (req, res) => {
+    let text = req.body.aboutText
+    let skill = req.body.skill
+    let language = req.body.language
+    let workExp = req.body.workexp
+    let education = {
+        name: req.body.school,
+        degree: req.body.degree,
+        start: req.body.start,
+        end: req.body.end
+    }
     let updateId = req.user._id
     Student.getStudentById(updateId ,(err, user) => {
         //console.log(user.contact_info.email)
@@ -24,8 +34,16 @@ router.post('/dashboard', (req, res) => {
                 'contact_info.email': user.contact_info.email
             },
             {
+                $set: {
+                    'about.text': text,
+                    'about.location.city': req.body.city,
+                    'about.location.zipcode': req.body.postalcode
+                },
                 $addToSet: {
-                    'tags': newtags
+                    'education': education,
+                    'experience.skills': skill,
+                    'experience.languages': language,
+                    'experience.work_experience': workExp
                 }
             },
             {
@@ -49,6 +67,61 @@ function ensureAuthenticated(req, res, next) {
         res.redirect('/user/login')
     }
 }
+
+//add bookmarks
+router.post('/add_bookmark', (req, res) => {
+    let bookmark = req.body.addBookmark
+    Student.getStudentById(req.user._id ,(err, user) => {
+        Student.findOneAndUpdate(
+            {
+                'contact_info.email': user.contact_info.email
+            },
+            {
+                $addToSet: {
+                    'bookmarks': bookmark
+                }
+            },
+            {
+                returnNewDocument: true
+            },
+            function(err, doc) {
+                if(err) console.log(err)
+                else {
+                    console.log(doc)
+                }
+            }
+        )
+    })
+    res.redirect('/search')
+})
+
+//delete bookmarks
+router.get('/delete_bookmark/:email', (req, res) => {
+    let bookmark = req.params.email
+    console.log(bookmark)
+    Student.getStudentById(req.user._id ,(err, user) => {
+        Student.findOneAndUpdate(
+            {
+                'contact_info.email': user.contact_info.email
+            },
+            {
+                $pull: {
+                    'bookmarks': bookmark
+                }
+            },
+            {
+                returnNewDocument: true
+            },
+            function(err, doc) {
+                if(err) console.log(err)
+                else {
+                    console.log(doc)
+                }
+            }
+        )
+    })
+    res.redirect('/student/dashboard')
+})
 
 //.edu email validator
 app.use(expressValidator({
@@ -91,10 +164,20 @@ router.post('/register_student', (req, res) => {
     //rerender page with errors
     let errors = req.validationErrors()
     if (errors) {
-        res.render('talent/register_student', {
+        res.render('student/register_student', {
             errors: errors
         })
     } else {
+        //time created
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        var hour = d.getHours();
+        var minutes = d.getMinutes();
+        var seconds = d.getSeconds();
+        var year = d.getFullYear();
+        var time = `${month}-${day}-${year} - ${hour}:${minutes}:${seconds}`
+        console.log(`Account created on: ${time}`)
         //else create new user
         let newStudent = new Student({
             about: {
@@ -111,16 +194,18 @@ router.post('/register_student', (req, res) => {
                 email: email, 
                 websites: [website1]
             },
+            enabled: true,
             username: username,
             password: password,
-            account_type: 'student'
+            account_type: 'student',
+            created: time
         })
         Student.createStudent(newStudent, (err, student) => {
             if (err) throw err
             console.log(student)
         })
         req.flash('success_msg', 'You have successfully registered.')
-        res.redirect('/user/login')
+        res.redirect('/')
     }
 })
 
