@@ -150,6 +150,16 @@ router.post('/register_business', (req, res) => {
             errors: errors
         })
     } else {
+        //time created
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        var hour = d.getHours();
+        var minutes = d.getMinutes();
+        var seconds = d.getSeconds();
+        var year = d.getFullYear();
+        var time = `${month}-${day}-${year} - ${hour}:${minutes}:${seconds}`
+        console.log(`Account created on: ${time}`)
         //else create new user
         let newBusiness = new Business({
             about: {
@@ -169,7 +179,8 @@ router.post('/register_business', (req, res) => {
             },
             username: name,
             password: password,
-            account_type: 'business'
+            account_type: 'business',
+            created: time
         })
         Business.createBusiness(newBusiness, (err, business) => {
             if (err) throw err
