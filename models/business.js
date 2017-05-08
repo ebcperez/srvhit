@@ -15,7 +15,7 @@ var job = {
         type: [String]
     },
     deadline: {
-        type: Date
+        type: String
     },
     jobType: {
         type: String
@@ -65,9 +65,6 @@ const BusinessSchema = new Schema({
             zipcode: {
                 type: String
             },
-        },
-        description: {
-            type: String
         },
         companySize: {
             type: Number

@@ -1,0 +1,50 @@
+
+<form method="post" action="/student/dashboard">
+	<div class="flex-row">
+		<section class="info-panel">
+			<h2>{{ user.company_name }}</h2>
+			<p>{{ user.contact_info.email }}<br />{{ user.contact_info.websites }}<br />{{ user.contact_info.phone }}</p>
+		</section>
+		<div class="content-panel">
+			<section>
+				<h3>About</h3>
+				<div class="indent">
+					<label class="control-label">Address</label>
+					<div class="address-block">
+						<div class="flex-row">
+							<input type="text" name="address" placeholder="Street" value="{{ user.about.location.address }}" />
+						</div>
+						<div class="flex-row">
+							<input type="text" name="city" placeholder="City" style="flex-grow:1" value="{{ user.about.location.city }}" />
+							<input type="text" name="state" placeholder="State" maxlength="2" value="CA" readonly style="width: 15%;flex-grow:1" />
+							<input type="text" name="postalcode" placeholder="Zip" maxlength="5" style="width: 30%;flex-grow:1" value="{{ user.about.location.zipcode }}" />
+						</div>
+					</div>
+				</div>
+				<Br />
+				<div class="indent">
+					<label>Description</label>
+					<textarea value="{{ user.about.description }}"></textarea>
+				</div>
+				<br />
+				<div class="indent flex-row">
+					<div>
+						<label>Company Size</label>
+						<input type="text" class="form-control" name="size" value="{{ user.about.companySize }}" />
+					</div>
+					<div>
+						<label>Industry</label>
+						<input type="text" class="form-control" name="industry" value="{{ user.about.industry }}" />
+					</div>
+				</div>
+			</section>
+			<section id="experience-panel">
+				<h3>Opportunities</h3>
+				<div class="indent">
+					[Placeholder for Opportunities]
+				</div>
+			</section>
+		</div>
+	</div>
+			
+</form>

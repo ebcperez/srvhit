@@ -11,6 +11,105 @@ router.get('/dashboard', (req, res) => {
     res.render('business/dashboard_business', {user: req.user.toJSON()})
 })
 
+//update profile
+router.post('/update_profile', (req, res) => {
+    let text = req.body.aboutText
+    let job = {
+        position: req.body.position,
+        jobType: req.body.jobType,
+        description: req.body.description,
+        deadline: req.body.deadline,
+        tags: [req.body.tags]
+    }
+    let updateId = req.user._id
+    Student.getStudentById(updateId ,(err, user) => {
+        //console.log(user.contact_info.email)
+        Student.findOneAndUpdate(
+            {
+                'contact_info.email': user.contact_info.email
+            },
+            {
+                $set: {
+                    'about.text': text,
+                    'about.location.address': req.body.address,
+                    'about.location.city': req.body.city,
+                    'about.location.zipcode': req.body.postalcode,
+                    'about.industry': req.body.industry,
+                    'about.companySize': req.body.size,
+                },
+                $addToSet: {
+                    'jobs': job
+                }
+            },
+            {
+                returnNewDocument: true
+            },
+            function(err, doc) {
+                if(err) console.log(err)
+                else {
+                    console.log(doc)
+                }
+            }
+        )
+    })
+    res.redirect('/student/dashboard')
+})
+
+//add bookmarks
+router.post('/add_bookmark', (req, res) => {
+    let bookmark = req.body.addBookmark
+    Business.getBusinessById(req.user._id ,(err, user) => {
+        Business.findOneAndUpdate(
+            {
+                'contact_info.email': user.contact_info.email
+            },
+            {
+                $addToSet: {
+                    'bookmarks': bookmark
+                }
+            },
+            {
+                returnNewDocument: true
+            },
+            function(err, doc) {
+                if(err) console.log(err)
+                else {
+                    console.log(doc)
+                }
+            }
+        )
+    })
+    res.redirect('/search')
+})
+
+//delete bookmarks
+router.get('/delete_bookmark/:email', (req, res) => {
+    let bookmark = req.params.email
+    console.log(bookmark)
+    Business.getBusinessById(req.user._id ,(err, user) => {
+        Business.findOneAndUpdate(
+            {
+                'contact_info.email': user.contact_info.email
+            },
+            {
+                $pull: {
+                    'bookmarks': bookmark
+                }
+            },
+            {
+                returnNewDocument: true
+            },
+            function(err, doc) {
+                if(err) console.log(err)
+                else {
+                    console.log(doc)
+                }
+            }
+        )
+    })
+    res.redirect('/business/dashboard')
+})
+
 //get register view
 router.get('/register_business', (req, res) => {
     res.render('business/register_business')
