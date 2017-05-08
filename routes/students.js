@@ -3,7 +3,6 @@ const express = require('express')
 const router = express.Router()
 const expressValidator = require('express-validator')
 const mongoose = require('mongoose')
-const $ = require('jquery')
 
 const app = express()
 
