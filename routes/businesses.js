@@ -8,7 +8,7 @@ const Business = require('../models/business')
 
 //dashboard
 router.get('/dashboard', (req, res) => {
-    res.render('business/dashboard_business', {user: req.user})
+    res.render('business/dashboard_business', {user: req.user.toJSON()})
 })
 
 //get register view
@@ -18,7 +18,7 @@ router.get('/register_business', (req, res) => {
 
 //post business registration form
 router.post('/register_business', (req, res) => {
-    let name = req.body.name
+    let name = req.body.username
     let phone = req.body.phone
     let email = req.body.email
     let website1 = req.body.website1
@@ -32,7 +32,7 @@ router.post('/register_business', (req, res) => {
     let password2 = req.body.password2
 
     //validation
-    req.checkBody('name', 'Company name is required.').notEmpty()
+    req.checkBody('username', 'Company name is required.').notEmpty()
     req.checkBody('phone', 'Phone is required.').notEmpty()
     req.checkBody('email', 'Email is required.').notEmpty()
     req.checkBody('email', 'Email is not valid.').isEmail()

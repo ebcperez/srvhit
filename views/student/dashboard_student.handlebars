@@ -1,8 +1,19 @@
-<form method="post" action="/student/dashboard">
+<form method="post" action="/student/update_profile">
 	<div class="flex-row">
 		<section class="info-panel">
 			<h2>{{ user.about.name.first }} {{ user.about.name.last }}</h2>
 			<p>{{ user.contact_info.email }}<br />{{ user.contact_info.websites }}</p>
+			Bookmarks:<br>
+			<ul class="list-group">
+				{{#each user.bookmarks}}
+					<li class="list-group-item">
+						<a href="/profile/{{this}}">{{this}}</a>
+						<button class="btn btn-default">
+							<a href="/student/delete_bookmark/{{this}}">Delete</a>
+						</button>
+					</li>
+				{{/each}}
+			</ul>
 		</section>
 		<div class="content-panel">
 			<section>
@@ -22,31 +33,63 @@
 				</div>
 				<div class="indent">
 					<label>About Me</label>
-					<textarea value="{{ user.about.text }}"></textarea>
+					<input type="text" name="aboutText" value="{{ user.about.text }}"></input>
 				</div>
 			</section>
 			<section id="experience-panel">
 				<h3>Experience</h3>
 				<div class="indent">
 					<label>Work Experience</label>
-					<input type="text" name="workexp" value="{{ user.experience.work_experience }}"></input>
+					{{#each user.experience.work_experience}}
+						{{#if this}}
+							<a class="list-group-item">{{this}}</a>
+						{{/if}}
+					{{/each}}
+					<input type="text" name="workexp" placeholder="add work experience"></input>
 					<br /><br />
 					
-					<label>Tools</label>
-					<input type="text" name="tools" value="{{ user.experience.tools }}"></input>
+					<label>Skills</label>
+					{{#each user.experience.skills}}
+						{{#if this}}
+							<a class="list-group-item">{{this}}</a>
+						{{/if}}
+					{{/each}}
+					<input type="text" name="skill" placeholder="add skill"></input>
 					<br /><br />
 					
 					<label>Languages</label>
-					<input type="text" name="languages" value="{{ user.experience.languages }}"></input>
+					{{#each user.experience.languages}}
+						{{#if this}}
+							<a class="list-group-item">{{this}}</a>
+						{{/if}}
+					{{/each}}
+					<input type="text" name="language" placeholder="add language"></input>
 				</div>
 			</section>
 			<section>
 				<h3>Education</h3>
+				{{#each user.education}}
+					{{#if name}}
+						<a class="list-group-item">School: {{name}}</a>
+					{{/if}}
+					{{#if degree}}
+						<a class="list-group-item">Degree: {{degree}}</a>
+					{{/if}}
+					{{#if start}}
+						{{#if end}}
+							<a class="list-group-item">{{start}} - {{end}}</a>
+						{{/if}}
+					{{/if}}			
+				{{/each}}
+				Add School
 				<div class="indent">
-					[Placeholder for school]
+					<input type="text" name="school" placeholder="school"></input>
+					<input type="text" name="degree" placeholder="degree"></input>
+					<input type="number" name="start" placeholder="start"></input> to
+					<input type="number" name="end" placeholder="end"></input>
 				</div>
 			</section>
+			<button type="submit" class="btn btn-default">Save</button>	
 		</div>
 	</div>
-			
 </form>

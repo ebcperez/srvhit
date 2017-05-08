@@ -1,7 +1,7 @@
 <form method="post" action="/business/dashboard">
 	<div class="flex-row">
 		<section class="info-panel">
-			<h2>{{ username }}</h2>
+			<h2>{{ user.username }}</h2>
 			<p>{{ user.contact_info.email }}<br />{{ user.contact_info.websites }}</p>
 		</section>
 		<div class="content-panel">
@@ -10,7 +10,7 @@
 				<div class="flex-row indent">
                     <div style="flex-grow: 1;padding-right: 20px;">
 						<label>Address</label>
-						<input type="text" class="form-control" placeholder="address" name="address" value="{{ user.about.location }}">
+						<input type="text" class="form-control" placeholder="address" name="address" value="{{ user.about.location.address }}">
 					</div>
 					<div style="flex-grow: 1;padding-right: 20px;">
 						<label>City</label>
@@ -26,7 +26,7 @@
 				</div>
 				<div class="indent">
 					<label>About Us</label>
-					<input type="text" name="text" value="{{ user.about }}"></input>
+					<input type="text" name="text" value="{{ user.about.text }}"></input>
 				</div>
 			</section>
 			<section id="experience-panel">

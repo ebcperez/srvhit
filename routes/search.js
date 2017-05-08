@@ -40,7 +40,8 @@ router.get('/', ensureAuthenticated, (req, res) => {
 
 //filter student search results
 router.post('/student/filter', (req, res) => {
-    Business.find({'about.location.zipcode': req.body.zipcode}, (err, docs) => {
+    console.log(req.body.query)
+    Business.find({'about.location.zipcode': req.body.query}, (err, docs) => {
         if (err) throw err
         res.render('student/student_search', {docs})
     })

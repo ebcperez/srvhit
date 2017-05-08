@@ -25,6 +25,8 @@ var job = {
 const BusinessSchema = new Schema({ 
 
     account_type: String,
+    enabled: Boolean,
+    created: String,
     username: {
         type: String,
         unique: true,
@@ -80,6 +82,10 @@ const BusinessSchema = new Schema({
         /*photo: {
 
         }*/
+   },
+
+   bookmarks: {
+       type: [String]
    },
 
    //job postings

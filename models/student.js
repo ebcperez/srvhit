@@ -3,9 +3,26 @@ const bcrypt = require('bcryptjs')
 const users = require('./user')
 const Schema = mongoose.Schema
 
+var school = {
+    name: {
+        type: String
+    },
+    degree: {
+        type: String
+    },
+    start: {
+        type: Number
+    },
+    end: {
+        type: Number
+    }
+}
+
 const StudentSchema = new Schema({ 
 
     account_type: String,
+    enabled: Boolean,
+    created: String,
     username: {
         type: String,
         unique: true,
@@ -65,7 +82,7 @@ const StudentSchema = new Schema({
         languages: {
             type: [String] 
         },
-        tools: {
+        skills: {
             type: [String]
         },
         work_experience: {
@@ -73,21 +90,13 @@ const StudentSchema = new Schema({
         },
    },
 
-   tags: {
+   bookmarks: {
        type: [String]
    },
    
    //Information on Students education
    education: {
-        school: {
-            type: String
-        },
-        degree: {
-            type: String
-        },
-        graduation: {
-            type: Number
-        },
+        type: [school]
    }
 })
 /*
