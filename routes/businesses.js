@@ -4,12 +4,27 @@ const router = express.Router()
 const expressValidator = require('express-validator')
 const mongoose = require('mongoose')
 
+const app = express()
+
 const Business = require('../models/business')
 
 //dashboard
 router.get('/dashboard', (req, res) => {
     res.render('business/dashboard_business', {user: req.user.toJSON()})
 })
+
+app.use(expressValidator({
+     customValidators: {
+        validZipcode: function(zipcode) {
+            let temp = zipcode.substring(0, 3)
+            if(temp === '952' || temp === '953' || temp === '955' || temp === '956' || temp === '957' || temp === '958' || temp === '959') {
+                return true;    
+            } else { 
+                return false;
+            }
+         }    
+     }
+ }))
 
 //update profile
 router.post('/update_profile', (req, res) => {
@@ -124,7 +139,7 @@ router.post('/register_business', (req, res) => {
     let preference = req.body.preference
     let address = req.body.address
     let city = req.body.city
-    let zipcode = req.body.postalcode
+    let zipcode = req.body.zipcode
     let industry = req.body.industry
     let size = req.body.size
     let password = req.body.password
@@ -137,7 +152,8 @@ router.post('/register_business', (req, res) => {
     req.checkBody('email', 'Email is not valid.').isEmail()
     req.checkBody('address', 'Address is required.').notEmpty()
     req.checkBody('city', 'City is required.').notEmpty()
-    req.checkBody('postalcode', 'Postal Code is required.').notEmpty()
+    req.checkBody('zipcode', 'Zipcode is required.').notEmpty()
+    req.checkBody('zipcode', 'Zipcode is not in the Sacramento Region.').validZipcode()
     req.checkBody('industry', 'Industry is required.').notEmpty()
     req.checkBody('size', 'Company size is required.').notEmpty()
     req.checkBody('password', 'Password is required.').notEmpty()
