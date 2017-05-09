@@ -8,7 +8,106 @@ const Business = require('../models/business')
 
 //dashboard
 router.get('/dashboard', (req, res) => {
-    res.render('business/dashboard_business', {user: req.user})
+    res.render('business/dashboard_business', {user: req.user.toJSON()})
+})
+
+//update profile
+router.post('/update_profile', (req, res) => {
+    let text = req.body.aboutText
+    let job = {
+        position: req.body.position,
+        jobType: req.body.jobType,
+        description: req.body.description,
+        deadline: req.body.deadline,
+        tags: [req.body.tags]
+    }
+    let updateId = req.user._id
+    Student.getStudentById(updateId ,(err, user) => {
+        //console.log(user.contact_info.email)
+        Student.findOneAndUpdate(
+            {
+                'contact_info.email': user.contact_info.email
+            },
+            {
+                $set: {
+                    'about.text': text,
+                    'about.location.address': req.body.address,
+                    'about.location.city': req.body.city,
+                    'about.location.zipcode': req.body.postalcode,
+                    'about.industry': req.body.industry,
+                    'about.companySize': req.body.size,
+                },
+                $addToSet: {
+                    'jobs': job
+                }
+            },
+            {
+                returnNewDocument: true
+            },
+            function(err, doc) {
+                if(err) console.log(err)
+                else {
+                    console.log(doc)
+                }
+            }
+        )
+    })
+    res.redirect('/student/dashboard')
+})
+
+//add bookmarks
+router.post('/add_bookmark', (req, res) => {
+    let bookmark = req.body.addBookmark
+    Business.getBusinessById(req.user._id ,(err, user) => {
+        Business.findOneAndUpdate(
+            {
+                'contact_info.email': user.contact_info.email
+            },
+            {
+                $addToSet: {
+                    'bookmarks': bookmark
+                }
+            },
+            {
+                returnNewDocument: true
+            },
+            function(err, doc) {
+                if(err) console.log(err)
+                else {
+                    console.log(doc)
+                }
+            }
+        )
+    })
+    res.redirect('/search')
+})
+
+//delete bookmarks
+router.get('/delete_bookmark/:email', (req, res) => {
+    let bookmark = req.params.email
+    console.log(bookmark)
+    Business.getBusinessById(req.user._id ,(err, user) => {
+        Business.findOneAndUpdate(
+            {
+                'contact_info.email': user.contact_info.email
+            },
+            {
+                $pull: {
+                    'bookmarks': bookmark
+                }
+            },
+            {
+                returnNewDocument: true
+            },
+            function(err, doc) {
+                if(err) console.log(err)
+                else {
+                    console.log(doc)
+                }
+            }
+        )
+    })
+    res.redirect('/business/dashboard')
 })
 
 //get register view
@@ -18,7 +117,7 @@ router.get('/register_business', (req, res) => {
 
 //post business registration form
 router.post('/register_business', (req, res) => {
-    let name = req.body.name
+    let name = req.body.username
     let phone = req.body.phone
     let email = req.body.email
     let website1 = req.body.website1
@@ -32,7 +131,7 @@ router.post('/register_business', (req, res) => {
     let password2 = req.body.password2
 
     //validation
-    req.checkBody('name', 'Company name is required.').notEmpty()
+    req.checkBody('username', 'Company name is required.').notEmpty()
     req.checkBody('phone', 'Phone is required.').notEmpty()
     req.checkBody('email', 'Email is required.').notEmpty()
     req.checkBody('email', 'Email is not valid.').isEmail()
@@ -51,6 +150,16 @@ router.post('/register_business', (req, res) => {
             errors: errors
         })
     } else {
+        //time created
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        var hour = d.getHours();
+        var minutes = d.getMinutes();
+        var seconds = d.getSeconds();
+        var year = d.getFullYear();
+        var time = `${month}-${day}-${year} - ${hour}:${minutes}:${seconds}`
+        console.log(`Account created on: ${time}`)
         //else create new user
         let newBusiness = new Business({
             about: {
@@ -70,7 +179,8 @@ router.post('/register_business', (req, res) => {
             },
             username: name,
             password: password,
-            account_type: 'business'
+            account_type: 'business',
+            created: time
         })
         Business.createBusiness(newBusiness, (err, business) => {
             if (err) throw err
