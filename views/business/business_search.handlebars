@@ -29,30 +29,46 @@
 </div>
 </form>
 <!-- Student Cards -->
+<div class="flex-row" style="min-height: 100%;margin-bottom: 20px">
+<div style="width: 66.6666%; height:auto">
 <div class="all-cards">
   {{#each users}}
   <a class="uiCard" href="/profile/{{contact_info.email}}">
   <div class="content">
     <div class="cardHeader">
-      <img class="studentImage" src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png">
+      <img class="studentImage" src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png" style="vertical-align: top;" />
       <div class="head_right">
           <h4>{{about.name.first}} {{about.name.last}}</h4>
-          <h4>{{account_type}}</h4>
           <h6>School: {{#each education}}
               {{name}}
               {{/each}}
           </h6>
+		  </div>
+		  </div>
           <form method="post" action="/business/add_bookmark">
               <div>
                   <input type = "hidden" name = "addBookmark" value = {{contact_info.email}} />
-                  <button id="bookmark" type="submit">Bookmark</label>
+                  <button id="bookmark" type="submit">Bookmark</button>
               </div>
           </form>
-          </div>
-      </div>
     </div>
+	</a>
   {{/each}}
     </div>
+</div>
 
-  </a>
+<div class="favorites">
+  {{#each users}}
+  <a class="bookmark"   href="/profile/{{contact_info.email}}">
+  <div class="flex-row">
+      <img class="studentImage" src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png" />
+      <div class="head_right">
+        <h4>{{username}}</h4>
+        <h4>Industry: {{about.industry}}</h4>
+      </div>
+    </div>
+	<img class="star" src="/css/bookmark.png" />
+	</a>
+  {{/each}}
+</div>
 </div>
