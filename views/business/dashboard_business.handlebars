@@ -1,1 +1,77 @@
-{{user}}
+<form method="post" action="/student/update_profile">
+	<div class="flex-row">
+		<section class="info-panel">
+			{{#unless user.enabled}}
+				<h1>ACCOUNT DISABLED</h1>
+			{{/unless}}
+			<h2>{{ user.username }}</h2>
+			<p>{{ user.contact_info.email }}<br />{{ user.contact_info.websites }}</p>
+			Bookmarks:<br>
+			<ul class="list-group">
+				{{#each user.bookmarks}}
+					<li class="list-group-item">
+						<a href="/profile/{{this}}">{{this}}</a>
+						<button class="btn btn-default">
+							<a href="/business/delete_bookmark/{{this}}">Delete</a>
+						</button>
+					</li>
+				{{/each}}
+			</ul>
+		</section>
+		<div class="content-panel">
+			<section>
+				<h3>About</h3>
+				<div class="flex-row indent">
+					<div style="flex-grow: 1;padding-right: 20px;">
+						<label>Address</label>
+						<input type="text" class="form-control" placeholder="city" name="address" value="{{ user.about.location.address }}">
+					</div>
+					<div style="flex-grow: 1;padding-right: 20px;">
+						<label>City</label>
+						<input type="text" class="form-control" placeholder="city" name="city" value="{{ user.about.location.city }}">
+					</div>
+					<div style="width: 30%">
+						<label>Zip / Postal Code</label>
+						<div class="controls">
+							<input id="postal-code" name="postalcode" type="text" placeholder="zip or postal code" class="form-control" value="{{ user.about.location.zipcode }}">
+							<p class="help-block"></p>
+						</div>
+					</div>
+				</div>
+				<div class="indent">
+					<label>About Us</label>
+					<input type="text" name="aboutText" value="{{ user.about.text }}"></input>
+				</div>
+				<div class="indent">
+					<label>Industry</label>
+					<input type="text" name="industry" value="{{ user.about.industry }}"></input>
+				</div>
+				<div class="indent">
+					<label>Company Size</label>
+					<input type="text" name="size" value="{{ user.about.companySize }}"></input>
+				</div>
+			</section>
+			<section>
+				<h3>Jobs</h3>
+				{{#each user.jobs}}
+					{{#if position}}
+						<a class="list-group-item">Position: {{position}}</a>
+						<a class="list-group-item">Type: {{jobType}}</a>
+						<a class="list-group-item">Description: {{description}}</a>
+						<a class="list-group-item">Tags: {{tags}}</a>
+						<a class="list-group-item">Deadline: {{deadline}}</a>
+					{{/if}}		
+				{{/each}}
+				Add Job
+				<div class="indent">
+					<input type="text" name="position" placeholder="position"></input>
+					<input type="text" name="jobType" placeholder="job type"></input>
+					<input type="text" name="description" placeholder="description"></input>
+					<input type="text" name="deadline" placeholder="deadline"></input>
+					<input type="text" name="tags" placeholder="tags"></input>
+				</div>
+			</section>
+			<button type="submit" class="btn btn-default">Save</button>	
+		</div>
+	</div>
+</form>

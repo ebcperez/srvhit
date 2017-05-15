@@ -149,7 +149,7 @@ background-color: lightgrey;
 min-height: 0;
 background: #fff;
 border-radius: .28571429rem;
-overflow: scroll;
+overflow: hidden;
 display: inline-block;
 width: 30%;
 height: 235px!important;
@@ -211,7 +211,7 @@ margin: 0;
 /*search bar*/
 input[type=text], select {
     width: 45%;
-    padding: 12px 20px;
+    padding: 4px 10px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;

@@ -31,15 +31,25 @@
 <!-- Student Cards -->
 <div class="all-cards">
   {{#each users}}
-  <a class="uiCard" >
+  <a class="uiCard" href="/profile/{{contact_info.email}}">
   <div class="content">
     <div class="cardHeader">
       <img class="studentImage" src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png">
       <div class="head_right">
-      <h4>{{about.name.first}} {{about.name.last}}</h4>
-      <h6>School: Sac Sate </h6>
-       </div>
-    </div>
+          <h4>{{about.name.first}} {{about.name.last}}</h4>
+          <h4>{{account_type}}</h4>
+          <h6>School: {{#each education}}
+              {{name}}
+              {{/each}}
+          </h6>
+          <form method="post" action="/business/add_bookmark">
+              <div>
+                  <input type = "hidden" name = "addBookmark" value = {{contact_info.email}} />
+                  <button id="bookmark" type="submit">Bookmark</label>
+              </div>
+          </form>
+          </div>
+      </div>
     </div>
   {{/each}}
     </div>

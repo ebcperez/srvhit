@@ -12,6 +12,31 @@ router.get('/dashboard', (req, res) => {
     res.render('admin/dashboard_admin')
 })
 
+//disable account
+router.post('/disable', (req, res) => {
+    let account = req.body.email
+    User.findOneAndUpdate(
+        {
+            'contact_info.email': account
+        },
+        {
+            $set: {
+                'enabled': false
+            }
+        },
+        {
+            returnNewDocument: true
+        },
+        function(err, doc) {
+            if(err) console.log(err)
+            else {
+                console.log(doc)
+            }
+        }
+    )
+    res.redirect('/search')
+})
+
 //get register view
 router.get('/register_admin', (req, res) => {
     res.render('admin/register_admin')
