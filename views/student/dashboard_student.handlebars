@@ -1,5 +1,6 @@
 <form method="post" action="/student/update_profile">
-	<div class="flex-row">
+	<div>
+		<div class="info container">
 		<section class="info-panel">
 			{{#unless user.enabled}}
 				<h4>ACCOUNT DISABLED</h4>
@@ -18,6 +19,7 @@
 				{{/each}}
 			</ul>
 		</section>
+		</div>
 		<div class="content-panel">
 			<section>
 				<h3>About</h3>

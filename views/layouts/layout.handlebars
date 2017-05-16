@@ -8,10 +8,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link href="/css/style.css" rel="stylesheet" type="text/css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     </head>
     <body>
         <div class="container">
-            <div class="header clearfix">
+            <div class="header clearfix container">
                 <nav>
                     <ul class="nav nav-pills pull-right">
                         {{#if user}}
@@ -19,7 +20,7 @@
                         <li role="presentation" class="active"><a href="/user/dashboard">Dashboard</a></li>
                         <li role="presentation"><a href="/user/logout">Logout</a></li>
                         {{else}}
-                        <li role="presentation"><a href="javascript:void(0)" onclick="popLogin()">Login</a></li>
+                        <li role="presentation"><a href="javascript:void(0)" onclick="popLogin()" id="loginpop">Login</a></li>
                         <!--<li role="presentation"><a href="/user/login">Login</a></li>-->
                         <li role="presentation"><a href="/register">Register</a></li>
                         {{/if}}
@@ -28,8 +29,8 @@
                 <a class="navbar-brand" href="/">SRVHIT</a>
             </div>
 
-            <div class="row">
-                <div class="col-lg-12">
+            <div class="row content-container">
+                <div class="col-lg-12" style="height: 100%">
                     {{#if success_msg}}
                         <div class="alert alert-success">
                             {{success_msg}}
@@ -49,13 +50,40 @@
                 </div>
             </div>
 
-            <footer class="footer">
+            <footer class="footer container">
                 <p>&copy; 2017 JNED, Inc.</p>
             </footer>
 
         </div> <!-- /container -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<Script>
+			
+			function redirect(url) {
+				$('body').animate({ opacity: 0 }, { duration: 500, complete: function () {
+					window.location.href = url;
+				} })
+			}
+			
+			function display() {
+				$('body').animate({ opacity: 1 }, { duration: 500 });
+			}
+			
+			$(function () {
+				display();
+			});
+			
+			$('#registersubmit').click(function (e) {
+				e.preventDefault();
+				$('#login').attr('onsubmit', 'return false;');
+				window.location.href = '/register';
+				return false;
+			});
+			
+			$('a:not(#loginpop)').click(function (e) {
+				e.preventDefault();
+				redirect(this.getAttribute('href'));
+			});
+			</script>
         {{#if user}}
 		{{else}}
 		<div class="splash-overlay">
@@ -67,6 +95,7 @@
 					<label for="pass">Password:</label>
 					<input type="password" id="pass" name="password" />
 					<input type="submit" value="Log In" id="loginsubmit" />
+					<input type="submit" value="Register" id="registersubmit" />
 				</form>
 			</div>
 		</div>
