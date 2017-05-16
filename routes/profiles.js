@@ -11,9 +11,12 @@ const User = require('../models/user')
 //render profile page of user
 router.get('/:profile', (req, res) => {
     console.log('params: '+req.params.profile)
-    User.findOne({'contact_info.email': req.params.profile}, (err, user) => {
+    User.findOne({'contact_info.email': req.params.profile}, (err, doc) => {
         if (err) throw err
-        res.render('search/profile_view', {user})
+        User.getUserByUsername(doc.username, (err, user) => {
+            console.log(user.toJSON())
+            res.render('search/profile_view', {user})
+        })
     })
 })
 
