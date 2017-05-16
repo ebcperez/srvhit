@@ -31,9 +31,6 @@ const BusinessSchema = new Schema({
         type: String,
         unique: true,
     },
-    account_id: {
-        type: Schema.Types.ObjectId
-    },
     password: {
         type: String
     },

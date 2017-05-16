@@ -27,10 +27,6 @@ const StudentSchema = new Schema({
         type: String,
         unique: true,
     },
-    account_id: {
-        type: Schema.Types.ObjectId,
-        unique: true
-    },
     password: {
         type: String
     },

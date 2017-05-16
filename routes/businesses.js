@@ -196,7 +196,8 @@ router.post('/register_business', (req, res) => {
             username: name,
             password: password,
             account_type: 'business',
-            created: time
+            created: time,
+            enabled: true
         })
         Business.createBusiness(newBusiness, (err, business) => {
             if (err) throw err
