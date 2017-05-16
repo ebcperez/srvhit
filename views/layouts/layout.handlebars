@@ -16,11 +16,7 @@
                 <nav>
                     <ul class="nav nav-pills pull-right">
                         {{#if user}}
-			{{#equals user.account_type "student"}}
-                        <li role="presentation"><a href="/search">Find Opportunity</a></li>
-			{{else}}
-                        <li role="presentation"><a href="/search">Find Talent</a></li>
-			{{/equal}}
+                        <li role="presentation"><a href="/search" id="searchbutton"></a></li>
                         <li role="presentation" class="active"><a href="/user/dashboard">Dashboard</a></li>
                         <li role="presentation"><a href="/user/logout">Logout</a></li>
                         {{else}}
