@@ -1,6 +1,59 @@
 {{#equal user.account_type "student"}}
-<!-- BUSINESS -->
-
+<form method="post" action="/student/update_profile">
+	<div>
+	<div class="info container">
+		<section class="info-panel">
+			<h2>{{ user.username }}</h2>
+			<p>{{ user.contact_info.email }}<br />{{ user.contact_info.websites }}</p>
+		</section>
+		</div>
+		<div class="content-panel">
+			<section>
+				<h3>About</h3>
+				<div class="flex-row indent">
+					<div style="flex-grow: 1;padding-right: 20px;">
+						<label>Address</label>
+						<span>{{ user.about.location.address }}</span>
+					</div>
+					<div style="flex-grow: 1;padding-right: 20px;">
+						<label>City</label>
+						<span>{{ user.about.location.city }}</span>
+					</div>
+					<div style="width: 30%">
+						<label>Zip / Postal Code</label>
+						<div class="controls">
+							<span>{{ user.about.location.zipcode }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="indent">
+					<label>About Us</label>
+					<p>{{ user.about.text }}</p>
+				</div>
+				<div class="indent">
+					<label>Industry</label>
+					<p>{{ user.about.industry }}</p>
+				</div>
+				<div class="indent">
+					<label>Company Size</label>
+					<p>{{ user.about.companySize }}</p>
+				</div>
+			</section>
+			<section>
+				<h3>Jobs</h3>
+				{{#each user.jobs}}
+					{{#if position}}
+						<a class="list-group-item">Position: {{position}}</a>
+						<a class="list-group-item">Type: {{jobType}}</a>
+						<a class="list-group-item">Description: {{description}}</a>
+						<a class="list-group-item">Tags: {{tags}}</a>
+						<a class="list-group-item">Deadline: {{deadline}}</a>
+					{{/if}}		
+				{{/each}}
+			</section>
+		</div>
+	</div>
+</form>
 {{else}}
 <!-- STUDENT -->
 
