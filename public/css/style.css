@@ -114,7 +114,9 @@ a {
 
 .content-panel {
 	padding: 10px;
-	flex-grow: 1
+	flex-grow: 1;
+	margin-bottom:20px;
+	width: calc(100% - 300px);
 }
 
 .content-panel section {
