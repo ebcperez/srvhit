@@ -207,7 +207,8 @@ span.button {
 }
 
 .gothic {
-	font-family: "gothic"	
+	font-family: "gothic";
+	font-weight: bold
 }
 
 .navbar-brand.gothic {
