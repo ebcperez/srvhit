@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'gothic';
+    src: url('franklingothic-demi-webfont.woff2') format('woff2'),
+         url('franklingothic-demi-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
 *, *::after, *::before {
 	box-sizing: border-box;
 }
@@ -194,6 +204,10 @@ span.button {
 
 .content-panel {
 	margin-left: 300px;
+}
+
+.gothic {
+	font-family: "gothic"	
 }
 
 
