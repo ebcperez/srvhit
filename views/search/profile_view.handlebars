@@ -1,6 +1,84 @@
 {{#equal user.account_type "student"}}
 <form method="post" action="/student/update_profile">
 	<div>
+		<div class="info container">
+		<section class="info-panel">
+			{{#unless user.enabled}}
+				<h4>ACCOUNT DISABLED</h4>
+			{{/unless}}
+			<h2>{{ user.about.name.first }} {{ user.about.name.last }}</h2>
+			<p>{{ user.contact_info.email }}<br />{{ user.contact_info.websites }}</p>
+		</section>
+		</div>
+		<div class="content-panel">
+			<section>
+				<h3>About</h3>
+				<div class="flex-row indent">
+					<div style="flex-grow: 1;padding-right: 20px;">
+						<label>City</label>
+						<span>{{ user.about.location.city }}</span>
+					</div>
+					<div style="width: 30%">
+						<label>Zip / Postal Code</label>
+						<div class="controls">
+							<span>{{ user.about.location.zipcode }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="indent">
+					<label>About Me</label>
+					<p>{{ user.about.text }}</p>
+				</div>
+			</section>
+			<section id="experience-panel">
+				<h3>Experience</h3>
+				<div class="indent">
+					<label>Work Experience</label>
+					{{#each user.experience.work_experience}}
+						{{#if this}}
+							<a class="list-group-item">{{this}}</a>
+						{{/if}}
+					{{/each}}
+					<br /><br />
+					
+					<label>Skills</label>
+					{{#each user.experience.skills}}
+						{{#if this}}
+							<a class="list-group-item">{{this}}</a>
+						{{/if}}
+					{{/each}}
+					<br /><br />
+					
+					<label>Languages</label>
+					{{#each user.experience.languages}}
+						{{#if this}}
+							<a class="list-group-item">{{this}}</a>
+						{{/if}}
+					{{/each}}
+				</div>
+			</section>
+			<section>
+				<h3>Education</h3>
+				{{#each user.education}}
+					{{#if name}}
+						<a class="list-group-item">School: {{name}}</a>
+					{{/if}}
+					{{#if degree}}
+						<a class="list-group-item">Degree: {{degree}}</a>
+					{{/if}}
+					{{#if start}}
+						{{#if end}}
+							<a class="list-group-item">{{start}} - {{end}}</a>
+						{{/if}}
+					{{/if}}			
+				{{/each}}
+			</section>	
+		</div>
+	</div>
+</form>
+{{else}}
+<form method="post" action="/student/update_profile">
+	<div>
 	<div class="info container">
 		<section class="info-panel">
 			<h2>{{ user.username }}</h2>
@@ -54,7 +132,4 @@
 		</div>
 	</div>
 </form>
-{{else}}
-<!-- STUDENT -->
-
 {{/equal}}
